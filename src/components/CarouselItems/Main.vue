@@ -1,7 +1,34 @@
 <template>
-  <div class="2xl:px-96">
-    <h3 class="font-bold text-2xl mb-5">{{ props.title }}</h3>
-    <carousel v-bind="settings" :wrap-around="true" :items-to-show="4">
+  <div class="px-5 2xl:px-96">
+    <div
+      class="w-64 p-4 rounded-md bg-gray-200 animate-pulse"
+      v-if="!props.title"
+    ></div>
+    <h3 v-else class="font-bold text-2xl mb-5 text-quanta-shop">
+      {{ props.title }}
+    </h3>
+
+    <carousel
+      v-if="!anuncios"
+      v-bind="settings"
+      :wrap-around="true"
+      :items-to-show="quantidadeDeCard"
+    >
+      <slide v-for="slide in 12" :key="slide" class="w-full rounded-xl">
+        <ItemCarousel />
+      </slide>
+
+      <template #addons>
+        <navigation />
+      </template>
+    </carousel>
+
+    <carousel
+      v-else
+      v-bind="settings"
+      :wrap-around="true"
+      :items-to-show="quantidadeDeCard"
+    >
       <slide
         v-for="(anuncio, index) in anuncios"
         :key="index"
@@ -12,7 +39,6 @@
 
       <template #addons>
         <navigation />
-        <pagination />
       </template>
     </carousel>
   </div>
@@ -20,8 +46,8 @@
 
 <script setup>
 import "vue3-carousel/dist/carousel.css";
-import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
-import { defineProps } from "vue";
+import { Carousel, Slide, Navigation } from "vue3-carousel";
+import { defineProps, onMounted, ref } from "vue";
 import ItemCarousel from "./ItemCarousel.vue";
 
 const settings = {
@@ -29,7 +55,17 @@ const settings = {
   snapAlign: "center",
 };
 
-const props = defineProps(["title", "anuncios"]);
+const quantidadeDeCard = ref(2);
+onMounted(() => {
+  if (window.innerWidth <= 760) return (quantidadeDeCard.value = 2);
+
+  return (quantidadeDeCard.value = 5);
+});
+
+const props = defineProps({
+  title: String,
+  anuncios: Array,
+});
 </script>
 
 <style lang="scss" scoped></style>

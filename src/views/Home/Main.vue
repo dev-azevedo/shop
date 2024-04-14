@@ -1,7 +1,10 @@
 <template>
   <section>
     <BannerHone />
-    <div v-if="maioresCategorias.length > 0">
+    <div v-if="maioresCategorias.length === 0">
+      <CarouselItems v-for="carousel in 6" :key="carousel" class="mt-10" />
+    </div>
+    <div v-else>
       <CarouselItems
         v-for="categoria in maioresCategorias"
         :key="categoria.idCategoria"

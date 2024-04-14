@@ -1,22 +1,29 @@
 <template>
   <div
-    class="rounded-xl bg-gray-50 flex flex-col justify-center items-center h-80"
+    v-if="!anuncio"
+    class="animate-pulse rounded-xl shadow-lg m-5 bg-gray-200 flex flex-col justify-center items-center h-96 w-96"
+  ></div>
+
+  <div
+    v-else
+    class="rounded-xl shadow-lg m-5 bg-gray-50 flex flex-col justify-center items-center h-96 w-96"
+    :class="{ 'animate-pulse': !anuncio }"
   >
-    <div class="rounded-t-xl w-full h-1/2 flex">
+    <div class="w-1/2 h-1/2 flex items-center justify-center">
       <img
         :src="props.anuncio.imagemUrl"
-        class="w-full"
-        alt="bg-center bg-cover bg-contain"
+        class="rounded-full w-28 h-28"
+        alt="bg-center bg-contain"
       />
     </div>
     <div
-      class="rounded-b-xl w-full h-1/2 p-2 flex flex-col items-start justify-between"
+      class="rounded-b-xl h-1/2 p-2 flex flex-col items-start justify-between"
     >
       <h2 class="font-semibold text-gray-700 text-start">
         {{ props.anuncio.nome }}
       </h2>
 
-      <div class="flex w-full items-end bg-gray-50 rounded-lg p-1">
+      <div class="flex w-full items-end bg-quanta-shop rounded-lg p-1">
         <p class="font-semibold text-quanta-shop-secondary text-center">
           Cashback de até: {{ props.anuncio.cashback
           }}{{ tipoCashBack[props.anuncio.tipoCashback] }}
