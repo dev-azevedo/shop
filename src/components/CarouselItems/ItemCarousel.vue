@@ -9,6 +9,9 @@
     class="rounded-xl shadow-lg m-5 bg-gray-50 flex flex-col justify-center items-center h-96 w-96"
     :class="{ 'animate-pulse': !anuncio }"
   >
+    <div class="flex justify-start w-full items-start pt-5 pl-5 text-gray-400">
+      <h3>{{ props.nomeCategoria }}</h3>
+    </div>
     <div class="w-1/2 h-1/2 flex items-center justify-center">
       <img
         :src="props.anuncio.imagemUrl"
@@ -23,7 +26,9 @@
         {{ props.anuncio.nome }}
       </h2>
 
-      <div class="flex w-full items-end bg-quanta-shop rounded-lg p-1">
+      <div
+        class="flex w-full justify-center items-center bg-quanta-shop rounded-lg p-1"
+      >
         <p class="font-semibold text-quanta-shop-secondary text-center">
           Cashback de até: {{ props.anuncio.cashback
           }}{{ tipoCashBack[props.anuncio.tipoCashback] }}
@@ -40,7 +45,7 @@
 <script setup>
 import { defineProps } from "vue";
 
-const props = defineProps(["anuncio"]);
+const props = defineProps(["anuncio", "nomeCategoria"]);
 
 const tipoCashBack = {
   percentage: "%",

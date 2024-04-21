@@ -1,6 +1,7 @@
 <template>
   <section>
     <BannerHone />
+    <CarrosselCategorias class="mt-10" />
     <div v-if="maioresCategorias.length === 0">
       <CarouselItems v-for="carousel in 6" :key="carousel" class="mt-10" />
     </div>
@@ -9,6 +10,7 @@
         v-for="categoria in maioresCategorias"
         :key="categoria.idCategoria"
         :title="categoria.nome"
+        :idCategoria="categoria.idCategoria"
         :anuncios="categoria.anuncios"
         class="mt-10"
       />
@@ -23,8 +25,10 @@
 <script setup>
 import BannerHone from "@/components/BannerHome/Main.vue";
 import CarouselItems from "@/components/CarouselItems/Main.vue";
+import CarrosselCategorias from "@/components/CarrosselCategorias/Main.vue";
 import { onMounted, ref } from "vue";
-import { api } from "@/services/Api/api.js";
+import { api } from "@/services/api.js";
+import { buscarItemDaCategoria } from "@/services/helper.js";
 
 const maioresCategorias = ref([]);
 
@@ -37,31 +41,19 @@ const obterCategorias = async () => {
   const { data } = await api.post("Anunciante/obterCategorias/", { nome: "" });
 
   //Ordenei a lista por numero de categorias e peguei as 6 que tem mais
-  data.sort(
-    (a, b) => b.categoriaAnunciante.length - a.categoriaAnunciante.length
-  );
-  maioresCategorias.value = data.slice(0, 6);
+  if (data) {
+    console.log(data);
+    // data.sort(
+    //   (a, b) => b.categoriaAnunciante.length - a.categoriaAnunciante.length
+    // );
 
-  maioresCategorias.value.map(async (categoria) => {
-    categoria.anuncios = await buscarItemDaCategoria(categoria.idCategoria);
-    console.log("itensDaCategoria", categoria.anuncios);
-  });
+    maioresCategorias.value = data.slice(0, 6);
 
-  console.log(maioresCategorias.value);
-};
-
-const buscarItemDaCategoria = async (idCategoria) => {
-  const dadoCategoria = {
-    descricao: "",
-    idCategoria: idCategoria,
-    page: 1,
-    quantidade: 12,
-    tipoAnunciante: [],
-    totalPaginas: 1,
-  };
-
-  const { data } = await api.post("Anunciante/obterAnuncios/", dadoCategoria);
-  return data.anunciantes;
+    maioresCategorias.value.map(async (categoria) => {
+      const dados = await buscarItemDaCategoria(categoria.idCategoria);
+      categoria.anuncios = dados.anunciantes;
+    });
+  }
 };
 </script>
 

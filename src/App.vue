@@ -13,6 +13,9 @@ export default {
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
 .bg-quanta-shop {
   background-color: #286874;
 }
@@ -27,5 +30,14 @@ export default {
 
 .text-quanta-shop-secondary {
   color: #98c73a !important;
+}
+
+.outline-quanta-shop {
+  outline-color: #286874;
+  outline-width: 1px;
+}
+
+.border-quanta-shop {
+  border-color: #286874;
 }
 </style>

@@ -4,9 +4,24 @@
       class="w-64 p-4 rounded-md bg-gray-200 animate-pulse"
       v-if="!props.title"
     ></div>
-    <h3 v-else class="font-bold text-2xl mb-5 text-quanta-shop">
-      {{ props.title }}
-    </h3>
+    <div v-else class="flex justify-between items-center">
+      <h3 class="font-bold text-2xl mb-5 text-quanta-shop">
+        {{ props.title }}
+      </h3>
+
+      <router-link
+        :to="{
+          name: 'categoria',
+          params: {
+            idCategoria: props.idCategoria,
+            nomeCategoria: props.title,
+          },
+        }"
+        class="bg-gray-100 rounded-md p-2 text-quanta-shop-secondary hover:bg-gray-200 ease-in duration-200"
+      >
+        Mostrar todos os anúncios
+      </router-link>
+    </div>
 
     <carousel
       v-if="!anuncios"
@@ -34,7 +49,7 @@
         :key="index"
         class="w-full rounded-xl"
       >
-        <ItemCarousel :anuncio="anuncio" />
+        <ItemCarousel :anuncio="anuncio" :nomeCategoria="props.title" />
       </slide>
 
       <template #addons>
@@ -59,11 +74,12 @@ const quantidadeDeCard = ref(2);
 onMounted(() => {
   if (window.innerWidth <= 760) return (quantidadeDeCard.value = 2);
 
-  return (quantidadeDeCard.value = 5);
+  return (quantidadeDeCard.value = 4);
 });
 
 const props = defineProps({
   title: String,
+  idCategoria: Number,
   anuncios: Array,
 });
 </script>
