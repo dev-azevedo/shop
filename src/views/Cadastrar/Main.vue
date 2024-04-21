@@ -1,6 +1,6 @@
 <template>
   <section class="lg:flex">
-    <div class="bg-yellow-400 hidden w-1/2 lg:block h-auto">imagem</div>
+    <div class="bg-quanta-shop hidden w-1/2 lg:block h-auto">imagem</div>
     <div class="w-full lg:w-1/2 flex flex-col justify-center items-center">
       <div
         class="w-full text-end absolute top-3 right-3 font-bold text-quanta-shop"
@@ -8,7 +8,7 @@
         <router-link to="/" class="text-xl">X</router-link>
       </div>
       <div
-        class="flex flex-col justify-center bg-teal-800 px-10 py-5 rounded-3xl mx-10 my-5 max-w-96 text-center"
+        class="flex flex-col justify-center bg-quanta-shop px-10 py-5 rounded-3xl mx-10 my-5 max-w-96 text-center"
       >
         <img
           src="@/assets/img/logo-quanta-shop-branca.b701cc1c.png"
