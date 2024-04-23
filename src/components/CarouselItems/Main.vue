@@ -4,7 +4,7 @@
       class="w-64 p-4 rounded-md bg-gray-200 animate-pulse"
       v-if="!props.title"
     ></div>
-    <div v-else class="flex justify-between items-center">
+    <div v-else class="flex flex-col md:flex-row justify-between items-center">
       <h3 class="font-bold text-2xl mb-5 text-quanta-shop">
         {{ props.title }}
       </h3>
@@ -72,7 +72,7 @@ const settings = {
 
 const quantidadeDeCard = ref(2);
 onMounted(() => {
-  if (window.innerWidth <= 760) return (quantidadeDeCard.value = 2);
+  if (window.innerWidth <= 760) return (quantidadeDeCard.value = 1);
 
   return (quantidadeDeCard.value = 4);
 });

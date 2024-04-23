@@ -40,4 +40,8 @@ export default {
 .border-quanta-shop {
   border-color: #286874;
 }
+
+.border-quanta-shop-secondary {
+  border-color: #98c73a;
+}
 </style>

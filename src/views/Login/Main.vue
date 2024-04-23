@@ -1,6 +1,10 @@
 <template>
   <section class="lg:flex">
-    <div class="bg-quanta-shop hidden w-1/2 lg:block h-auto">imagem</div>
+    <div
+      class="bg-quanta-shop hidden w-1/2 lg:flex h-auto justify-center items-center"
+    >
+      <img src="@/assets/img/Retail markdown-amico.svg" alt="" class="w-2/3" />
+    </div>
     <div
       class="w-full lg:w-1/2 flex flex-col justify-center items-center h-screen"
     >
@@ -32,6 +36,7 @@
             type="text"
             placeholder="Digite seu e-mail ou login"
             v-model="loginEmail"
+            :disabled="isLoading"
           />
         </div>
 
@@ -43,6 +48,7 @@
               :type="typePass"
               placeholder="Digite sua senha"
               v-model="senha"
+              :disabled="isLoading"
             />
             <div class="absolute top-3 right-2">
               <Eye
@@ -71,9 +77,11 @@
           <button
             type="button"
             @click="entrar()"
-            class="bg-quanta-shop p-3 rounded-lg text-gray-50 font-semibold"
+            class="bg-quanta-shop p-3 rounded-lg text-gray-50 font-semibold flex justify-center"
+            :disabled="isLoading"
           >
-            Login
+            <LoadingIcon v-if="isLoading" />
+            <span v-else>Login</span>
           </button>
           <router-link
             to="/cadastrar"
@@ -100,21 +108,32 @@
 import { api } from "@/services/api";
 import { Eye, EyeOff } from "lucide-vue-next";
 import { ref } from "vue";
+import { AuthStore } from "@/stores/Auth";
+import { useRouter } from "vue-router";
+import LoadingIcon from "@/components/LoadingIcon/Main.vue";
 
+const auth = AuthStore();
+const router = useRouter();
 const typePass = ref("password");
 const loginEmail = ref("");
 const senha = ref("");
+const isLoading = ref(false);
 
 const entrar = async () => {
   try {
+    isLoading.value = true;
     const { data } = await api.post("UsuarioLogin/autenticacao", {
       login: loginEmail.value,
       senha: senha.value,
     });
 
-    console.log(data);
+    auth.setUser(data);
+
+    router.push("/");
   } catch (err) {
     console.log(err);
+  } finally {
+    isLoading.value = false;
   }
 };
 </script>

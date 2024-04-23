@@ -87,7 +87,7 @@ const quantidadeDeCard = ref(8);
 onMounted(() => {
   obterCategorias();
 
-  if (window.innerWidth <= 760) return (quantidadeDeCard.value = 2);
+  if (window.innerWidth <= 760) return (quantidadeDeCard.value = 1);
 
   return (quantidadeDeCard.value = 5);
 });
