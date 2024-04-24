@@ -40,7 +40,7 @@
     </carousel>
   </div>
 
-  <div class="md:hidden">
+  <div class="md:hidden -mt-10">
     <carousel
       :autoplay="2000"
       :wrap-around="true"
@@ -50,7 +50,7 @@
       <slide
         v-for="(img, index) in imagesMob"
         :key="index"
-        class="hidden w-full bg-blue-300 rounded-md"
+        class="hidden w-5/6 bg-blue-300 rounded-md"
       >
         <img class="bg-cover bg-no-repeat bg-center rounded-md" :src="img" />
       </slide>

@@ -1,14 +1,16 @@
 <template>
   <section class="">
     <Menu></Menu>
-    <div class="w-full h-full p-2 mt-36">
+    <div class="w-full h-full min-h-screen p-2 mt-36 mb-10">
       <router-view></router-view>
     </div>
+    <Footer></Footer>
   </section>
 </template>
 
 <script setup>
 import Menu from "@/components/Menu/Main.vue";
+import Footer from "@/components/Footer/Main.vue";
 </script>
 
 <style scoped>

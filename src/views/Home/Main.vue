@@ -1,6 +1,6 @@
 <template>
   <section>
-    <BannerHone />
+    <BannerHone class="w-full" />
     <CarrosselCategorias class="mt-10" />
     <div v-if="maioresCategorias.length === 0">
       <CarouselItems v-for="carousel in 6" :key="carousel" class="mt-10" />
@@ -12,13 +12,9 @@
         :title="categoria.nome"
         :idCategoria="categoria.idCategoria"
         :anuncios="categoria.anuncios"
-        class="mt-10"
+        class="mt-20"
       />
     </div>
-    <p>Banner</p>
-    <p>Destaques</p>
-    <p>Oferta Relâmpago</p>
-    <p>Categorias de sites parceiros</p>
   </section>
 </template>
 
@@ -28,11 +24,12 @@ import CarouselItems from "@/components/CarouselItems/Main.vue";
 import CarrosselCategorias from "@/components/CarrosselCategorias/Main.vue";
 import { onMounted, ref } from "vue";
 import { api } from "@/services/api.js";
-import { buscarItemDaCategoria } from "@/services/helper.js";
+import { buscarItemDaCategoria, toTop } from "@/services/helper.js";
 
 const maioresCategorias = ref([]);
 
 onMounted(() => {
+  toTop();
   obterCategorias();
 });
 

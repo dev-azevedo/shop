@@ -48,7 +48,7 @@
               nomeCategoria: categoria.nome,
             },
           }"
-          class="rounded-xl flex justify-center items-center flex-col"
+          class="rounded-xl flex justify-top items-center flex-col h-52"
         >
           <div
             class="bg-quanta-shop h-24 w-24 rounded-full flex justify-center items-center"
@@ -87,7 +87,7 @@ const quantidadeDeCard = ref(8);
 onMounted(() => {
   obterCategorias();
 
-  if (window.innerWidth <= 760) return (quantidadeDeCard.value = 1);
+  if (window.innerWidth <= 760) return (quantidadeDeCard.value = 2);
 
   return (quantidadeDeCard.value = 5);
 });

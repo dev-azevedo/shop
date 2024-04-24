@@ -7,12 +7,18 @@ const routes = [
     children: [
       {
         path: "",
+        name: "home",
         component: () => import("@/views/Home/Main.vue"),
       },
       {
-        name: "categoria",
         path: "categoria/:idCategoria/:nomeCategoria",
+        name: "categoria",
         component: () => import("@/views/ListaDeAnunciantes/Main.vue"),
+      },
+      {
+        path: "quemsomos",
+        name: "quemsomos",
+        component: () => import("@/views/QuemSomos/Main.vue"),
       },
     ],
   },

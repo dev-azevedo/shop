@@ -1,13 +1,13 @@
 <template>
   <header class="fixed top-0 left-0 right-0 z-50">
     <div
-      class="relative flex flex-row items-center justify-center xl:justify-between h-24 gap-4 bg-quanta-shop xl:px-96"
+      class="relative flex flex-row items-center justify-center xl:justify-between h-24 gap-4 bg-quanta-shop xl:px-20 2xl:px-96"
     >
       <button @click="toggleOffcanvas" class="xl:hidden absolute left-4">
         <AlignJustify color="#FFF" :size="32" />
       </button>
 
-      <div class="w-44 xl:w-56 xl:mr-10">
+      <div class="w-32 xl:w-56 xl:mr-10">
         <img
           src="../../assets/img/logo-quanta-shop-branca.b701cc1c.png"
           alt="Quanta shop"
@@ -78,13 +78,17 @@
     </div>
 
     <nav
-      class="hidden lg:block bg-quanta-shop-secondary lg:px-10 2xl:px-96 p-2"
+      class="hidden xl:block bg-quanta-shop-secondary lg:px-10 2xl:px-96 p-2"
     >
       <ul
         class="flex justify-between font-semibold text-gray-50 text-xl cursor-pointer"
       >
-        <li>Lojas</li>
-        <li>Quem somos</li>
+        <li>
+          <router-link to="/"> Lojas </router-link>
+        </li>
+        <li>
+          <router-link to="/quemsomos">Quem somos </router-link>
+        </li>
         <li>Como funciona</li>
         <li>Credenciamento</li>
         <li>Contato</li>
@@ -159,15 +163,23 @@
             </div>
             <div class="border border-b-gray-300 w-full mt-3"></div>
             <ul class="font-semibold text-xl cursor-pointer mt-3">
-              <li
-                class="border-b border-gray-200 mb-3 p-1 flex gap-2 items-center"
-              >
-                <ShoppingBag :size="20" /> Lojas
+              <li class="border-b border-gray-200 mb-3 p-1">
+                <router-link
+                  to="/"
+                  @click="toggleOffcanvas()"
+                  class="flex gap-2 items-center"
+                >
+                  <ShoppingBag :size="20" /> Lojas
+                </router-link>
               </li>
-              <li
-                class="border-b border-gray-200 mb-3 p-1 flex gap-2 items-center"
-              >
-                <GalleryVerticalEnd :size="20" />Quem somos
+              <li class="border-b border-gray-200 mb-3 p-1">
+                <router-link
+                  to="/quemsomos"
+                  @click="toggleOffcanvas()"
+                  class="flex gap-2 items-center"
+                >
+                  <GalleryVerticalEnd :size="20" />Quem somos
+                </router-link>
               </li>
               <li
                 class="border-b border-gray-200 mb-3 p-1 flex gap-2 items-center"

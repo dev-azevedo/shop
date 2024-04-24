@@ -17,3 +17,10 @@ export const buscarItemDaCategoria = async (
   const { data } = await api.post("Anunciante/obterAnuncios/", dadoCategoria);
   return data;
 };
+
+export const toTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
