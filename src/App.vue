@@ -2,11 +2,7 @@
   <router-view />
 </template>
 
-<script>
-export default {
-  name: "App",
-};
-</script>
+<script setup></script>
 
 <style>
 @tailwind base;
@@ -16,6 +12,7 @@ export default {
 * {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .bg-quanta-shop {
   background-color: #286874;
 }

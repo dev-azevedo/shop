@@ -34,7 +34,6 @@ onMounted(() => {
 });
 
 const obterCategorias = async () => {
-  console.log(api);
   const { data } = await api.post("Anunciante/obterCategorias/", { nome: "" });
 
   //Ordenei a lista por numero de categorias e peguei as 6 que tem mais

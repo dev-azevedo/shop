@@ -46,22 +46,22 @@
           class="bg-white text-start p-2 border border-quanta-shop text-quanta-shop absolute w-48 opacity-0 opcoes-user rounded-md top-14"
         >
           <li
-            class="border-b border-gray-100 flex gap-2 mb-3 items-center hover:opacity-25"
+            class="border-b border-gray-100 flex gap-2 mb-3 items-center hover:opacity-50 ease-in duration-200"
           >
             <User :size="20" /> Perfil
           </li>
           <li
-            class="border-b border-gray-100 flex gap-2 mb-3 items-center hover:opacity-25"
+            class="border-b border-gray-100 flex gap-2 mb-3 items-center hover:opacity-50 ease-in duration-200"
           >
             <Lock :size="20" /> Alterar senha
           </li>
           <li
-            class="border-b border-gray-100 flex gap-2 mb-3 items-center hover:opacity-25"
+            class="border-b border-gray-100 flex gap-2 mb-3 items-center hover:opacity-50 ease-in duration-200"
           >
             <LayoutPanelLeft :size="20" />Painel
           </li>
           <li
-            class="border-b border-gray-100 flex gap-2 items-center hover:opacity-25"
+            class="border-b border-gray-100 flex gap-2 items-center hover:opacity-50 ease-in duration-200"
             @click="logout()"
           >
             <DoorOpen :size="20" /> Sair
@@ -81,23 +81,59 @@
       class="hidden xl:block bg-quanta-shop-secondary lg:px-10 2xl:px-96 p-2"
     >
       <ul
-        class="flex justify-between font-semibold text-gray-50 text-xl cursor-pointer"
+        class="flex justify-between font-semibold text-gray-50 text-xl cursor-pointer relative"
       >
         <li>
           <router-link to="/"> Lojas </router-link>
         </li>
         <li>
-          <router-link to="/quemsomos">Quem somos </router-link>
+          <router-link to="/quemsomos">Quem somos</router-link>
         </li>
-        <li>Como funciona</li>
+        <li>
+          <router-link to="/comofunciona">Como funciona</router-link>
+        </li>
         <li>Credenciamento</li>
         <li>Contato</li>
-        <li>Quanta Bank</li>
-        <li>Quanta Amizade</li>
-        <li>Instalar App</li>
+        <li class="btn-mais-opcoes-menu">
+          <span> Mais opções </span>
+          <ul
+            class="mais-opcoes-menu bg-gray-50 rounded-md text-quanta-shop p-2 absolute w-52"
+          >
+            <li
+              class="border-b border-gray-200 mb-3 p-1 hover:opacity-50 ease-in duration-200"
+            >
+              <a
+                href="https://quantabank.com.br/"
+                target="_blank"
+                class="flex gap-2 items-center"
+              >
+                <CreditCard :size="20" /> Quanta Bank
+              </a>
+            </li>
+            <li
+              class="border-b border-gray-200 mb-3 p-1 hover:opacity-50 ease-in duration-200"
+            >
+              <a
+                href="https://bigcash.blob.core.windows.net/documentos/CAMPANHA%20QUANTA%20AMIZADE.pdf"
+                target="_blank"
+                class="flex gap-2 items-center"
+              >
+                <Users :size="20" /> Quanta Amizade
+              </a>
+            </li>
+            <li
+              class="border-b border-gray-200 mb-3 p-1hover:opacity-50 ease-in duration-200"
+            >
+              <button @click="installApp()" class="flex gap-2 items-center">
+                <MonitorDown :size="20" /> Instalar App
+              </button>
+            </li>
+          </ul>
+        </li>
       </ul>
     </nav>
 
+    <!-- Mobile -->
     <div>
       <!-- Offcanvas -->
       <transition name="fade">
@@ -181,11 +217,13 @@
                   <GalleryVerticalEnd :size="20" />Quem somos
                 </router-link>
               </li>
-              <li
-                class="border-b border-gray-200 mb-3 p-1 flex gap-2 items-center"
-              >
-                <AppWindow :size="20" />
-                Como funciona
+              <li class="border-b border-gray-200 mb-3 p-1">
+                <router-link
+                  to="/comofunciona"
+                  class="flex gap-2 items-center"
+                  @click="toggleOffcanvas()"
+                  ><AppWindow :size="20" /> Como funciona</router-link
+                >
               </li>
               <li
                 class="border-b border-gray-200 mb-3 p-1 flex gap-2 items-center"
@@ -212,6 +250,7 @@
                 Quanta Amizade
               </li>
               <li
+                @click="installApp"
                 class="border-b border-gray-200 mb-3 p-1 flex gap-2 items-center"
               >
                 <MonitorDown :size="20" />
@@ -243,22 +282,53 @@ import {
   Users,
   MonitorDown,
 } from "lucide-vue-next";
-import { computed, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { AuthStore } from "@/stores/Auth";
 
 const auth = AuthStore();
 const showOffcanvas = ref(false);
+const beforeInstallPromptEvent = ref(null);
+const showOpcoesUser = ref(false);
 
 const user = computed(() => auth.getUser);
+
+onMounted(() => {
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    console.log("Evento beforeinstallprompt capturado:", event);
+  });
+  window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+});
 
 const toggleOffcanvas = () => {
   showOffcanvas.value = !showOffcanvas.value;
 };
 
-const showOpcoesUser = ref(false);
-
 const logout = () => {
   auth.logout();
+};
+
+const handleBeforeInstallPrompt = (event) => {
+  console.log("Evento beforeinstallprompt capturado:", event);
+  beforeInstallPromptEvent.value = event;
+};
+
+const installApp = () => {
+  if (beforeInstallPromptEvent.value) {
+    console.log(beforeInstallPromptEvent);
+    beforeInstallPromptEvent.value.prompt();
+    beforeInstallPromptEvent.value.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === "accepted") {
+        console.log("Usuário aceitou a instalação");
+      } else {
+        console.log("Usuário recusou a instalação");
+      }
+    });
+  }
 };
 </script>
 
@@ -276,9 +346,17 @@ const logout = () => {
   opacity: 0;
   transition: opacity 0.1s ease;
 }
+.mais-opcoes-menu {
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
 
 .btn-opcoes-user:hover .opcoes-user {
   opacity: 1;
+  transition: all 1s ease !important;
+}
+.btn-mais-opcoes-menu:hover .mais-opcoes-menu {
+  opacity: 1 !important;
   transition: all 1s ease !important;
 }
 </style>
