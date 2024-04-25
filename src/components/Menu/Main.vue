@@ -83,21 +83,25 @@
       <ul
         class="flex justify-between font-semibold text-gray-50 text-xl cursor-pointer relative"
       >
-        <li>
-          <router-link to="/"> Lojas </router-link>
+        <li class="hover:opacity-50 ease-in duration-200">
+          <router-link to="/" class="hover:opacity-50 ease-in duration-200">
+            Lojas
+          </router-link>
         </li>
-        <li>
+        <li class="hover:opacity-50 ease-in duration-200">
           <router-link to="/quemsomos">Quem somos</router-link>
         </li>
-        <li>
+        <li class="hover:opacity-50 ease-in duration-200">
           <router-link to="/comofunciona">Como funciona</router-link>
         </li>
         <li>Credenciamento</li>
-        <li>Contato</li>
+        <li class="hover:opacity-50 ease-in duration-200">
+          <router-link to="/contato">Contato</router-link>
+        </li>
         <li class="btn-mais-opcoes-menu">
-          <span> Mais opções </span>
+          <span class="flex items-end gap-2"> Mais opções <ChevronDown /></span>
           <ul
-            class="mais-opcoes-menu bg-gray-50 rounded-md text-quanta-shop p-2 absolute w-52"
+            class="mais-opcoes-menu bg-gray-50 rounded-md text-quanta-shop p-2 absolute w-52 top-8"
           >
             <li
               class="border-b border-gray-200 mb-3 p-1 hover:opacity-50 ease-in duration-200"
@@ -284,6 +288,7 @@ import {
 } from "lucide-vue-next";
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { AuthStore } from "@/stores/Auth";
+import { ChevronDown } from "lucide-vue-next";
 
 const auth = AuthStore();
 const showOffcanvas = ref(false);
