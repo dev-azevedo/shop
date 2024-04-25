@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="px-10 2xl:px-96">
     <BannerHone class="w-full" />
     <CarrosselCategorias class="mt-10" />
     <div v-if="maioresCategorias.length === 0">
@@ -15,6 +15,7 @@
         class="mt-20"
       />
     </div>
+    <PerguntasFrequentes />
   </section>
 </template>
 
@@ -25,6 +26,7 @@ import CarrosselCategorias from "@/components/CarrosselCategorias/Main.vue";
 import { onMounted, ref } from "vue";
 import { api } from "@/services/api.js";
 import { buscarItemDaCategoria, toTop } from "@/services/helper.js";
+import PerguntasFrequentes from "@/components/PerguntasFrequentes/Main.vue";
 
 const maioresCategorias = ref([]);
 

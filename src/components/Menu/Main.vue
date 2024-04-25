@@ -235,11 +235,15 @@
                 <FileText :size="20" />
                 Credenciamento
               </li>
-              <li
-                class="border-b border-gray-200 mb-3 p-1 flex gap-2 items-center"
-              >
-                <Mail :size="20" />
-                Contato
+              <li class="border-b border-gray-200 mb-3 p-1">
+                <router-link
+                  to="/contato"
+                  class="flex gap-2 items-center"
+                  @click="toggleOffcanvas()"
+                >
+                  <Mail :size="20" />
+                  Contato
+                </router-link>
               </li>
               <li
                 class="border-b border-gray-200 mb-3 p-1 flex gap-2 items-center"

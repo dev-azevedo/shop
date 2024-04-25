@@ -1,5 +1,5 @@
 <template>
-  <div class="2xl:px-96 hidden md:block">
+  <div class="hidden md:block">
     <!-- Skeleton loading -->
     <carousel
       :autoplay="2000"

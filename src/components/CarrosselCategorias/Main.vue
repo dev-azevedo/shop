@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5 2xl:px-96">
+  <div class="">
     <div
       v-if="categorias.length == 0"
       class="w-56 p-4 rounded-md bg-gray-200 animate-pulse mb-5"

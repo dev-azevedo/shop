@@ -1,7 +1,7 @@
 <template>
   <section class="px-10 lg:px-44 2xl:px-96">
     <p class="text-gray-400">
-      <router-link to="/">Home</router-link> > Como funciona
+      <router-link to="/">Home</router-link> > Contato
     </p>
 
     <div class="mt-10 2xl:mt-20 text-center">

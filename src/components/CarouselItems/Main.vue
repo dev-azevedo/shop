@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5 2xl:px-96">
+  <div>
     <div
       class="w-64 p-4 rounded-md bg-gray-200 animate-pulse"
       v-if="!props.title"
