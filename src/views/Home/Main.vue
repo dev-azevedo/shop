@@ -1,5 +1,5 @@
 <template>
-  <section class="px-10 2xl:px-96">
+  <section class="px-10 2xl:px-80">
     <BannerHone class="w-full" />
     <CarrosselCategorias class="mt-10" />
     <div v-if="maioresCategorias.length === 0">

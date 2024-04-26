@@ -77,7 +77,7 @@ import { ShoppingCart } from "lucide-vue-next";
 
 const settings = {
   itemsToShow: 1,
-  snapAlign: "center",
+  snapAlign: "left",
 };
 
 const categorias = ref([]);

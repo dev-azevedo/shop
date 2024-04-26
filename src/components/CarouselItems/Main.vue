@@ -5,7 +5,9 @@
       v-if="!props.title"
     ></div>
     <div v-else class="flex flex-col md:flex-row justify-between items-center">
-      <h3 class="font-bold text-2xl mb-5 text-quanta-shop">
+      <h3
+        class="font-bold text-2xl mb-5 text-center xl:text-start text-quanta-shop"
+      >
         {{ props.title }}
       </h3>
 
@@ -52,9 +54,7 @@
         <ItemCarousel :anuncio="anuncio" :nomeCategoria="props.title" />
       </slide>
 
-      <template #addons>
-        <navigation />
-      </template>
+      <template #addons> <navigation /> </template>
     </carousel>
   </div>
 </template>
@@ -67,7 +67,7 @@ import ItemCarousel from "./ItemCarousel.vue";
 
 const settings = {
   itemsToShow: 1,
-  snapAlign: "center",
+  snapAlign: "left",
 };
 
 const quantidadeDeCard = ref(2);
