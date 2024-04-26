@@ -1,5 +1,5 @@
 <template>
-  <section class="px-10 md:px-20 2xl:px-96">
+  <section class="px-10 md:px-20 2xl:px-80">
     <p class="text-gray-400">
       <router-link to="/">Home</router-link> > Categorias
     </p>
@@ -113,7 +113,6 @@ const buscarItens = async () => {
 
     totalItens.value = dados.quantidade * dados.totalPaginas;
 
-    console.log(dados);
     anunciantes.value = dados.anunciantes;
     totalPaginas.value = dados.totalPaginas;
   }

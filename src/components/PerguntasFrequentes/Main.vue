@@ -50,12 +50,6 @@ const buscarFaq = async () => {
     perguntasFrequentes.value = data;
 
     perguntasFrequentes.value.map((pergunta) => (pergunta.show = false));
-    // ativo: true;
-    // dataCadastro: "2020-04-08T18:32:55.957";
-    // idFaq: 1;
-    // pergunta: "Afinal, quanto tempo leva para minha compra ser identificada?";
-    // resposta: "O prazo pode se estender por alguns dias, mas geralmente as lojas levam até 48 horas para nos avisar das compras.";
-    // ultimaAtualizacao: "2024-01-29T16:27:04.8926497";
   } catch {
     console.log("err");
   }

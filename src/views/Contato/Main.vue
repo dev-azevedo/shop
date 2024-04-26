@@ -1,5 +1,5 @@
 <template>
-  <section class="px-10 lg:px-44 2xl:px-96">
+  <section class="px-10 lg:px-44 2xl:px-80">
     <p class="text-gray-400">
       <router-link to="/">Home</router-link> > Contato
     </p>

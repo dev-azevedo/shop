@@ -11,6 +11,7 @@
     "@tailwindui/vue": "^0.1.0-alpha.2",
     "axios": "^1.6.8",
     "core-js": "^3.8.3",
+    "crypto-js": "^4.2.0",
     "lucide-vue-next": "^0.365.0",
     "pinia": "^2.1.7",
     "vue": "^3.2.13",

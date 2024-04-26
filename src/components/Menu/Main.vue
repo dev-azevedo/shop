@@ -1,7 +1,7 @@
 <template>
   <header class="fixed top-0 left-0 right-0 z-50">
     <div
-      class="relative flex flex-row items-center justify-center xl:justify-between h-24 gap-4 bg-quanta-shop xl:px-20 2xl:px-96"
+      class="relative flex flex-row items-center justify-center xl:justify-between h-24 gap-4 bg-quanta-shop xl:px-20 2xl:px-80"
     >
       <button @click="toggleOffcanvas" class="xl:hidden absolute left-4">
         <AlignJustify color="#FFF" :size="32" />
@@ -43,7 +43,7 @@
         </div>
 
         <ul
-          class="bg-white text-start p-2 border border-quanta-shop text-quanta-shop absolute w-48 opacity-0 opcoes-user rounded-md top-14"
+          class="z-50 bg-white text-start p-2 border border-quanta-shop text-quanta-shop absolute w-48 opacity-0 opcoes-user rounded-md top-14"
         >
           <li
             class="border-b border-gray-100 flex gap-2 mb-3 items-center hover:opacity-50 ease-in duration-200"
@@ -78,7 +78,7 @@
     </div>
 
     <nav
-      class="hidden xl:block bg-quanta-shop-secondary lg:px-10 2xl:px-96 p-2"
+      class="hidden xl:block bg-quanta-shop-secondary lg:px-10 2xl:px-80 p-2"
     >
       <ul
         class="flex justify-between font-semibold text-gray-50 text-xl cursor-pointer relative"

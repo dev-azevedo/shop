@@ -53,15 +53,12 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted } from "vue";
+import { defineProps } from "vue";
 import { CircleDollarSign, Store } from "lucide-vue-next";
 import colors from "@/services/colors";
 
 const props = defineProps(["anuncio", "nomeCategoria"]);
 
-onMounted(() => {
-  console.log(props.anuncio);
-});
 const tipoCashBack = {
   percentage: "%",
 };

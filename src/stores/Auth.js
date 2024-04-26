@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, reactive } from "vue";
+import { encryptItem, decryptItem } from "@/services/crypto";
+import { api } from "@/services/api";
 
 export const AuthStore = defineStore("auth", () => {
   const user = reactive({
@@ -38,6 +40,9 @@ export const AuthStore = defineStore("auth", () => {
     user.token = userLogin.token;
     user.urlImg = userLogin.urlImg;
     user.username = userLogin.username;
+
+    const encrypt = encryptItem(userLogin);
+    localStorage.setItem("@quantashop", encrypt);
   };
 
   const logout = () => {
@@ -57,9 +62,29 @@ export const AuthStore = defineStore("auth", () => {
     user.token = null;
     user.urlImg = null;
     user.username = null;
+
+    localStorage.removeItem("@quantashop");
+  };
+
+  const buscarUserLocalStorage = () => {
+    const userLocalStorage = localStorage.getItem("@quantashop");
+    if (userLocalStorage) {
+      const user = decryptItem(userLocalStorage);
+      if (user) setUser(user);
+
+      api.interceptors.request.use(
+        (config) => {
+          config.headers.Authorization = `Bearer ${user.token}`;
+          return config;
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    }
   };
 
   const getUser = computed(() => user);
 
-  return { getUser, setUser, logout };
+  return { getUser, setUser, buscarUserLocalStorage, logout };
 });

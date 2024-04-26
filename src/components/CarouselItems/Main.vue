@@ -29,7 +29,7 @@
       v-if="!anuncios"
       v-bind="settings"
       :wrap-around="true"
-      :items-to-show="quantidadeDeCard"
+      :breakpoints="breakpoints"
     >
       <slide v-for="slide in 12" :key="slide" class="w-full rounded-xl">
         <ItemCarousel />
@@ -44,7 +44,8 @@
       v-else
       v-bind="settings"
       :wrap-around="true"
-      :items-to-show="quantidadeDeCard"
+      :breakpoints="breakpoints"
+      :transition="500"
     >
       <slide
         v-for="(anuncio, index) in anuncios"
@@ -62,7 +63,7 @@
 <script setup>
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
-import { defineProps, onMounted, ref } from "vue";
+import { defineProps } from "vue";
 import ItemCarousel from "./ItemCarousel.vue";
 
 const settings = {
@@ -70,12 +71,27 @@ const settings = {
   snapAlign: "left",
 };
 
-const quantidadeDeCard = ref(2);
-onMounted(() => {
-  if (window.innerWidth <= 760) return (quantidadeDeCard.value = 1);
+const breakpoints = {
+  420: {
+    itemsToShow: 1,
+    snapAlign: "center",
+  },
 
-  return (quantidadeDeCard.value = 4);
-});
+  700: {
+    itemsToShow: 3,
+    snapAlign: "start",
+  },
+
+  1024: {
+    itemsToShow: 4,
+    snapAlign: "start",
+  },
+
+  1920: {
+    itemsToShow: 5,
+    snapAlign: "start",
+  },
+};
 
 const props = defineProps({
   title: String,

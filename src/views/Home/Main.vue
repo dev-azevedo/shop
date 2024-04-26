@@ -12,7 +12,7 @@
         :title="categoria.nome"
         :idCategoria="categoria.idCategoria"
         :anuncios="categoria.anuncios"
-        class="mt-20"
+        class="mt-10"
       />
     </div>
     <PerguntasFrequentes />
@@ -41,11 +41,7 @@ const obterCategorias = async () => {
   //Ordenei a lista por numero de categorias e peguei as 6 que tem mais
   if (data) {
     console.log(data);
-    // data.sort(
-    //   (a, b) => b.categoriaAnunciante.length - a.categoriaAnunciante.length
-    // );
-
-    maioresCategorias.value = data.slice(0, 6);
+    maioresCategorias.value = data.slice(0, 8);
 
     maioresCategorias.value.map(async (categoria) => {
       const dados = await buscarItemDaCategoria(categoria.idCategoria);

@@ -11,7 +11,7 @@
       v-if="categorias.length == 0"
       v-bind="settings"
       :wrap-around="true"
-      :items-to-show="quantidadeDeCard"
+      :breakpoints="breakpoints"
     >
       <slide v-for="slide in 12" :key="slide" class="w-full rounded-xl">
         <div
@@ -33,7 +33,8 @@
       v-else
       v-bind="settings"
       :wrap-around="true"
-      :items-to-show="quantidadeDeCard"
+      :breakpoints="breakpoints"
+      :transition="500"
     >
       <slide
         v-for="categoria in categorias"
@@ -82,15 +83,31 @@ const settings = {
 
 const categorias = ref([]);
 
-const quantidadeDeCard = ref(8);
-
 onMounted(() => {
   obterCategorias();
-
-  if (window.innerWidth <= 760) return (quantidadeDeCard.value = 2);
-
-  return (quantidadeDeCard.value = 5);
 });
+
+const breakpoints = {
+  420: {
+    itemsToShow: 2,
+    snapAlign: "start",
+  },
+
+  700: {
+    itemsToShow: 4,
+    snapAlign: "start",
+  },
+
+  1024: {
+    itemsToShow: 5,
+    snapAlign: "start",
+  },
+
+  1920: {
+    itemsToShow: 6,
+    snapAlign: "start",
+  },
+};
 
 const obterCategorias = async () => {
   const { data } = await api.post("Anunciante/obterCategorias/", { nome: "" });

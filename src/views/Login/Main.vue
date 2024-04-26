@@ -32,7 +32,7 @@
         <div class="flex flex-col mt-10">
           <label for="" class="text-gray-600">E-mail ou login</label>
           <input
-            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop"
+            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
             placeholder="Digite seu e-mail ou login"
             v-model="loginEmail"
@@ -44,7 +44,7 @@
           <label for="" class="text-gray-600">Senha</label>
           <div class="w-full relative">
             <input
-              class="bg-gray-100 p-3 rounded-lg outline-quanta-shop w-full"
+              class="bg-gray-100 p-3 rounded-lg outline-quanta-shop w-full disabled:opacity-50"
               :type="typePass"
               placeholder="Digite sua senha"
               v-model="senha"
@@ -77,7 +77,7 @@
           <button
             type="button"
             @click="entrar()"
-            class="bg-quanta-shop p-3 rounded-lg text-gray-50 font-semibold flex justify-center"
+            class="bg-quanta-shop p-3 rounded-lg text-gray-50 font-semibold flex justify-center disabled:opacity-50"
             :disabled="isLoading"
           >
             <LoadingIcon v-if="isLoading" />
@@ -126,6 +126,16 @@ const entrar = async () => {
       login: loginEmail.value,
       senha: senha.value,
     });
+
+    api.interceptors.request.use(
+      (config) => {
+        config.headers.Authorization = `Bearer ${data.token}`;
+        return config;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
 
     auth.setUser(data);
 

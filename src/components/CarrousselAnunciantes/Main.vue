@@ -5,7 +5,7 @@
       v-if="anunciantesAleatorios.length == 0"
       v-bind="settings"
       :wrap-around="true"
-      :items-to-show="quantidadeDeCard"
+      :breakpoints="breakpoints"
     >
       <slide v-for="slide in 12" :key="slide" class="w-full rounded-xl">
         <div
@@ -28,7 +28,7 @@
       v-bind="settings"
       :autoplay="1000"
       :wrap-around="true"
-      :items-to-show="quantidadeDeCard"
+      :breakpoints="breakpoints"
     >
       <slide
         v-for="anuncio in anunciantesAleatorios"
@@ -55,19 +55,35 @@ import { api } from "@/services/api";
 
 const settings = {
   itemsToShow: 1,
-  snapAlign: "center",
+  snapAlign: "left",
 };
 
 const anunciantesAleatorios = ref([]);
 
-const quantidadeDeCard = ref(8);
+const breakpoints = {
+  420: {
+    itemsToShow: 1,
+    snapAlign: "center",
+  },
+
+  700: {
+    itemsToShow: 3,
+    snapAlign: "start",
+  },
+
+  1024: {
+    itemsToShow: 4,
+    snapAlign: "start",
+  },
+
+  1920: {
+    itemsToShow: 5,
+    snapAlign: "start",
+  },
+};
 
 onMounted(() => {
   getAnuciantesAleatorio();
-
-  if (window.innerWidth <= 760) return (quantidadeDeCard.value = 1);
-
-  return (quantidadeDeCard.value = 5);
 });
 
 const getAnuciantesAleatorio = async () => {
