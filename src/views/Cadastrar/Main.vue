@@ -1,6 +1,14 @@
 <template>
   <section class="lg:flex">
-    <div class="bg-quanta-shop hidden w-1/2 lg:block h-auto">imagem</div>
+    <div
+      class="bg-quanta-shop hidden w-1/2 lg:flex justify-center items-center"
+    >
+      <img
+        src="@/assets/img/Discount-cuate.svg"
+        alt=""
+        class="w-1/3 fixed top-28"
+      />
+    </div>
     <div class="w-full lg:w-1/2 flex flex-col justify-center items-center">
       <div
         class="w-full text-end absolute top-3 right-3 font-bold text-quanta-shop"
@@ -26,48 +34,65 @@
             >clique aqui!</span
           >
         </p>
+
         <div class="flex flex-col mt-10">
           <label for="" class="text-gray-600">login</label>
           <input
-            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop"
+            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
             placeholder="Digite seu login"
+            v-model="login"
           />
         </div>
 
         <div class="flex flex-col mt-5">
           <label for="" class="text-gray-600">Nome</label>
           <input
-            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop"
+            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
             placeholder="Digite seu nome completo"
+            v-model="nome"
           />
         </div>
 
         <div class="flex flex-col mt-5">
           <label for="" class="text-gray-600">E-mail</label>
           <input
-            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop"
+            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
             placeholder="Digite seu e-mail"
+            v-model="email"
           />
         </div>
 
         <div class="flex flex-col mt-5">
           <label for="" class="text-gray-600">Confirme seu e-mail</label>
           <input
-            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop"
+            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
             placeholder="Digite seu e-mail novamente"
+            v-model="confirmeEmail"
           />
+        </div>
+
+        <div
+          class="text-red-400 ease-in duration-200 h-0"
+          :class="{
+            'opacity-100': emailIncompativel,
+            'h-4': emailIncompativel,
+            'opacity-0': !emailIncompativel,
+          }"
+        >
+          Email incompatível, preencha corretamente.
         </div>
 
         <div class="flex flex-col mt-5">
           <label for="" class="text-gray-600">Celular</label>
           <input
-            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop"
+            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
             placeholder="Digite seu celular. Ex: (00) 00000-0000"
+            v-model="celular"
           />
         </div>
 
@@ -75,9 +100,10 @@
           <label for="" class="text-gray-600">Senha</label>
           <div class="w-full relative">
             <input
-              class="bg-gray-100 p-3 rounded-lg outline-quanta-shop w-full"
+              class="bg-gray-100 p-3 rounded-lg outline-quanta-shop w-full disabled:opacity-50"
               :type="typePass"
               placeholder="Digite sua senha"
+              v-model="senha"
             />
             <div class="absolute top-3 right-2">
               <Eye
@@ -100,20 +126,21 @@
           <label for="" class="text-gray-600">Confirme sua senha</label>
           <div class="w-full relative">
             <input
-              class="bg-gray-100 p-3 rounded-lg outline-quanta-shop w-full"
-              :type="typePass"
+              class="bg-gray-100 p-3 rounded-lg outline-quanta-shop w-full disabled:opacity-50"
+              :type="typeConfirmPass"
               placeholder="Digite sua senha novamente"
+              v-model="confirmeSenha"
             />
             <div class="absolute top-3 right-2">
               <Eye
-                v-if="typePass == 'password'"
-                @click="typePass = 'text'"
+                v-if="typeConfirmPass == 'password'"
+                @click="typeConfirmPass = 'text'"
                 class="cursor-pointer"
                 color="#286874"
               />
               <EyeOff
                 v-else
-                @click="typePass = 'password'"
+                @click="typeConfirmPass = 'password'"
                 class="cursor-pointer"
                 color="#286874"
               />
@@ -121,17 +148,33 @@
           </div>
         </div>
 
+        <div
+          class="text-red-400 ease-in duration-200 h-0"
+          :class="{
+            'opacity-100': senhaIncompativel,
+            'h-4': senhaIncompativel,
+            'opacity-0': !senhaIncompativel,
+          }"
+        >
+          Senha incompatível, preencha corretamente.
+        </div>
         <div class="flex flex-col mt-5">
           <label for="" class="text-gray-600">Patrocinador</label>
           <input
-            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop"
+            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
             placeholder="Digite seu patrocinador"
+            v-model="patrocinador"
           />
         </div>
 
         <div class="flex gap-2 mt-8">
-          <input type="checkbox" class="accent-lime-400 w-4 cursor-pointer" />
+          <input
+            type="checkbox"
+            :value="false"
+            class="accent-lime-400 w-4 cursor-pointer disabled:opacity-50"
+            v-model="termosECondicoes"
+          />
           <p>
             Li e concordo com os
             <a
@@ -143,7 +186,12 @@
           </p>
         </div>
         <div class="flex gap-2 mt-8">
-          <input type="checkbox" class="accent-lime-400 w-4 cursor-pointer" />
+          <input
+            type="checkbox"
+            :value="false"
+            class="accent-lime-400 w-4 cursor-pointer disabled:opacity-50"
+            v-model="politicaDePrivacidade"
+          />
           <p>
             Li e concordo com as
             <a
@@ -158,9 +206,10 @@
         <div class="flex flex-col mt-8">
           <button
             type="button"
-            class="bg-quanta-shop p-3 rounded-lg text-gray-50 font-semibold"
+            class="bg-quanta-shop p-3 rounded-lg text-gray-50 font-semibold disabled:opacity-50"
+            :disabled="disabledBtnCadastrar"
           >
-            Login
+            Cadastrar
           </button>
         </div>
 
@@ -179,9 +228,43 @@
 
 <script setup>
 import { Eye, EyeOff } from "lucide-vue-next";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const typePass = ref("password");
+const typeConfirmPass = ref("password");
+
+const login = ref("");
+const nome = ref("");
+const email = ref("");
+const confirmeEmail = ref("");
+const celular = ref("");
+const senha = ref("");
+const confirmeSenha = ref("");
+const patrocinador = ref("");
+const termosECondicoes = ref(false);
+const politicaDePrivacidade = ref(false);
+
+const disabledBtnCadastrar = computed(
+  () =>
+    !login.value ||
+    !nome.value ||
+    !email.value ||
+    !confirmeEmail.value ||
+    !!emailIncompativel.value ||
+    !senha.value ||
+    !confirmeSenha.value ||
+    !!senhaIncompativel.value ||
+    !patrocinador.value ||
+    !termosECondicoes.value ||
+    !politicaDePrivacidade.value
+);
+
+const emailIncompativel = computed(
+  () => email.value && confirmeEmail.value && email.value != confirmeEmail.value
+);
+const senhaIncompativel = computed(
+  () => senha.value && confirmeSenha.value && senha.value != confirmeSenha.value
+);
 </script>
 
 <style lang="scss" scoped></style>
