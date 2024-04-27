@@ -27,6 +27,11 @@ const routes = [
         component: () => import("@/views/ComoFunciona/Main.vue"),
       },
       {
+        path: "credenciamento",
+        name: "credenciamento",
+        component: () => import("@/views/Credenciamento/Main.vue"),
+      },
+      {
         path: "contato",
         name: "contato",
         component: () => import("@/views/Contato/Main.vue"),

@@ -94,7 +94,9 @@
         <li class="hover:opacity-50 ease-in duration-200">
           <router-link to="/comofunciona">Como funciona</router-link>
         </li>
-        <li>Credenciamento</li>
+        <li>
+          <router-link to="/credenciamento">Credenciamento</router-link>
+        </li>
         <li class="hover:opacity-50 ease-in duration-200">
           <router-link to="/contato">Contato</router-link>
         </li>
@@ -229,11 +231,13 @@
                   ><AppWindow :size="20" /> Como funciona</router-link
                 >
               </li>
-              <li
-                class="border-b border-gray-200 mb-3 p-1 flex gap-2 items-center"
-              >
-                <FileText :size="20" />
-                Credenciamento
+              <li class="border-b border-gray-200 mb-3 p-1">
+                <router-link
+                  to="/credenciamento"
+                  class="flex gap-2 items-center"
+                >
+                  <FileText :size="20" /> Credenciamento</router-link
+                >
               </li>
               <li class="border-b border-gray-200 mb-3 p-1">
                 <router-link

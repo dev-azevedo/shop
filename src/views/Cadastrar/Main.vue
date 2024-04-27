@@ -100,13 +100,13 @@
                 v-if="typePass == 'password'"
                 @click="typePass = 'text'"
                 class="cursor-pointer"
-                color="#286874"
+                color="colors.primary"
               />
               <EyeOff
                 v-else
                 @click="typePass = 'password'"
                 class="cursor-pointer"
-                color="#286874"
+                color="colors.primary"
               />
             </div>
           </div>
@@ -126,13 +126,13 @@
                 v-if="typeConfirmPass == 'password'"
                 @click="typeConfirmPass = 'text'"
                 class="cursor-pointer"
-                color="#286874"
+                color="colors.primary"
               />
               <EyeOff
                 v-else
                 @click="typeConfirmPass = 'password'"
                 class="cursor-pointer"
-                color="#286874"
+                color="colors.primary"
               />
             </div>
           </div>
@@ -210,6 +210,7 @@
 <script setup>
 import { Eye, EyeOff } from "lucide-vue-next";
 import { computed, ref, watch } from "vue";
+// import colors from "@/services/colors.js";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
