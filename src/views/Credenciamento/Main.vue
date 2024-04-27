@@ -179,6 +179,28 @@
           </div>
         </div>
       </div>
+
+      <div class="w-full flex flex-col mt-5">
+        <label for="" class="text-gray-600 mb-2">Importar logo</label>
+        <label
+          for="inputFile"
+          class="border-dashed border-2 text-center bg-gray-100 text-gray-300 font-medium p-3 rounded-lg outline-quanta-shop w-full"
+          :class="{ 'opacity-50': loadingCep, 'cursor-pointer': !loadingCep }"
+        >
+          <span v-if="!logo?.name">Importe sua logo aqui</span>
+          <span v-else class="text-gray-800">
+            {{ logo?.name }}
+          </span>
+        </label>
+        <input
+          id="inputFile"
+          type="file"
+          class="hidden"
+          :disabled="loadingCep"
+          @change.prevent="pegarLogo($event)"
+        />
+      </div>
+
       <hr class="w-full border-b border-gray-300 my-5" />
 
       <h4 class="text-xl font-medium text-quanta-shop">Endereço:</h4>
@@ -307,7 +329,7 @@
         <button
           type="button"
           class="bg-quanta-shop p-3 rounded-lg text-gray-50 font-semibold disabled:opacity-50"
-          :disabled="disabledBtnCadastrar"
+          :disabled="disabledBtnCadastrar || loadingCep"
           @click="console.log('salvar')"
         >
           Cadastrar
@@ -332,6 +354,7 @@ const typeConfirmPass = ref("password");
 
 const loadingCep = ref(false);
 const listaCategorias = ref([]);
+const arquivosAceitos = ref(["png", "jpg", "jpeg"]);
 
 const loginPatrocionador = ref(null);
 const nomeResponsavel = ref(null);
@@ -345,6 +368,7 @@ const email = ref(null);
 const confirmeEmail = ref(null);
 const senha = ref(null);
 const confirmeSenha = ref(null);
+const logo = ref({});
 
 const cep = ref(null);
 const rua = ref(null);
@@ -489,6 +513,18 @@ const obterCategoria = async () => {
       }
     );
   }
+};
+
+const pegarLogo = (e) => {
+  const files = e.target.files;
+
+  [...files].map((file) => {
+    const ext = file?.name.split(".").pop();
+    if (arquivosAceitos.value.includes(ext)) {
+      console.log(file);
+      logo.value = file;
+    }
+  });
 };
 </script>
 

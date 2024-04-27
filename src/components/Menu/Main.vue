@@ -357,19 +357,24 @@ const installApp = () => {
 
 .opcoes-user {
   opacity: 0;
-  transition: opacity 0.1s ease;
+  visibility: hidden;
+  transition: all 0.1s ease;
 }
 .mais-opcoes-menu {
   opacity: 0;
-  transition: opacity 0.1s ease;
+  visibility: hidden;
+  transition: all 0.1s ease;
 }
 
 .btn-opcoes-user:hover .opcoes-user {
-  opacity: 1;
+  opacity: 1 !important;
+  visibility: visible !important;
   transition: all 1s ease !important;
 }
+
 .btn-mais-opcoes-menu:hover .mais-opcoes-menu {
   opacity: 1 !important;
+  visibility: visible;
   transition: all 1s ease !important;
 }
 </style>
