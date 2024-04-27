@@ -9,17 +9,17 @@
     </div>
 
     <form>
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-3">
-        <div class="flex flex-col mt-5">
-          <label class="text-gray-600 mb-2">Login do patrocinador</label>
-          <input
-            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
-            type="text"
-            placeholder="Digite o login do patrocinador"
-            v-model="loginPatrocionador"
-          />
-        </div>
+      <div class="flex flex-col mt-5">
+        <label class="text-gray-600 mb-2">Login do patrocinador</label>
+        <input
+          class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
+          type="text"
+          placeholder="Digite o login do patrocinador"
+          v-model="loginPatrocionador"
+        />
+      </div>
 
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-3">
         <div class="flex flex-col mt-5">
           <label class="text-gray-600 mb-2">Nome do responsável</label>
           <input
@@ -104,6 +104,19 @@
             placeholder="Digite o CPF ou CNPJ."
             v-mask="['###.###.###-##', '##.###.###/####-##']"
             v-model="cpfCnpj"
+          />
+        </div>
+
+        <div class="flex flex-col mt-5">
+          <label for="" class="text-gray-600 mb-2"
+            >Celular do credenciado</label
+          >
+          <input
+            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
+            type="text"
+            placeholder="Digite o celular do credenciado. Ex: (00) 00000-0000"
+            v-mask="'(##) #####-####'"
+            v-model.lazy="celularCredenciado"
           />
         </div>
 
@@ -364,6 +377,7 @@ const percentualCashback = ref(null);
 const categoria = ref(null);
 const login = ref(null);
 const cpfCnpj = ref(null);
+const celularCredenciado = ref(null);
 const email = ref(null);
 const confirmeEmail = ref(null);
 const senha = ref(null);
@@ -396,6 +410,8 @@ const disabledBtnCadastrar = computed(
     !emailReal.value ||
     !celularResponsavel.value ||
     celularResponsavel.value.length < 15 ||
+    !celularCredenciado.value ||
+    celularCredenciado.value.length < 15 ||
     !senha.value ||
     senha.value.length < 8 ||
     !confirmeSenha.value ||

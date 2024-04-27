@@ -42,6 +42,7 @@
             type="text"
             placeholder="Digite seu login"
             v-model="login"
+            :disabled="loading"
           />
         </div>
 
@@ -52,6 +53,7 @@
             type="text"
             placeholder="Digite seu nome completo"
             v-model="nome"
+            :disabled="loading"
           />
         </div>
 
@@ -61,7 +63,8 @@
             class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
             placeholder="Digite seu e-mail"
-            v-model="email"
+            v-model.lazy="email"
+            :disabled="loading"
           />
         </div>
 
@@ -72,6 +75,19 @@
             type="text"
             placeholder="Digite seu e-mail novamente"
             v-model.lazy="confirmeEmail"
+            :disabled="loading"
+          />
+        </div>
+
+        <div class="flex flex-col mt-5">
+          <label for="" class="text-gray-600 mb-2">CPF ou CNPJ</label>
+          <input
+            class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
+            type="text"
+            placeholder="Digite seu CPF ou CNPJ"
+            v-mask="['###.###.###-##', '##.###.###/####-##']"
+            v-model="cpfCnpj"
+            :disabled="loading"
           />
         </div>
 
@@ -83,6 +99,7 @@
             placeholder="Digite seu celular. Ex: (00) 00000-0000"
             v-mask="'(##) #####-####'"
             v-model.lazy="celular"
+            :disabled="loading"
           />
         </div>
 
@@ -94,20 +111,25 @@
               :type="typePass"
               placeholder="Digite sua senha"
               v-model.lazy="senha"
+              :disabled="loading"
             />
             <div class="absolute top-3 right-2">
-              <Eye
+              <button
                 v-if="typePass == 'password'"
                 @click="typePass = 'text'"
-                class="cursor-pointer"
-                :color="colors.primary"
-              />
-              <EyeOff
+                class="disabled:opacity-50"
+                :disabled="loading"
+              >
+                <Eye :color="colors.primary" />
+              </button>
+              <button
                 v-else
                 @click="typePass = 'password'"
-                class="cursor-pointer"
-                :color="colors.primary"
-              />
+                class="disabled:opacity-50"
+                :disabled="loading"
+              >
+                <EyeOff :color="colors.primary" />
+              </button>
             </div>
           </div>
         </div>
@@ -120,20 +142,25 @@
               :type="typeConfirmPass"
               placeholder="Digite sua senha novamente"
               v-model.lazy="confirmeSenha"
+              :disabled="loading"
             />
             <div class="absolute top-3 right-2">
-              <Eye
+              <button
                 v-if="typeConfirmPass == 'password'"
                 @click="typeConfirmPass = 'text'"
-                class="cursor-pointer"
-                :color="colors.primary"
-              />
-              <EyeOff
+                class="disabled:opacity-50"
+                :disabled="loading"
+              >
+                <Eye :color="colors.primary" />
+              </button>
+              <button
                 v-else
                 @click="typeConfirmPass = 'password'"
-                class="cursor-pointer"
-                :color="colors.primary"
-              />
+                class="disabled:opacity-50"
+                :disabled="loading"
+              >
+                <EyeOff :color="colors.primary" />
+              </button>
             </div>
           </div>
         </div>
@@ -145,6 +172,7 @@
             type="text"
             placeholder="Digite seu patrocinador"
             v-model="patrocinador"
+            :disabled="loading"
           />
         </div>
 
@@ -154,6 +182,7 @@
             :value="false"
             class="accent-lime-400 w-4 cursor-pointer disabled:opacity-50"
             v-model="termosECondicoes"
+            :disabled="loading"
           />
           <p>
             Li e concordo com os
@@ -171,6 +200,7 @@
             :value="false"
             class="accent-lime-400 w-4 cursor-pointer disabled:opacity-50"
             v-model="politicaDePrivacidade"
+            :disabled="loading"
           />
           <p>
             Li e concordo com as
@@ -187,8 +217,8 @@
           <button
             type="button"
             class="bg-quanta-shop p-3 rounded-lg text-gray-50 font-semibold disabled:opacity-50"
-            :disabled="disabledBtnCadastrar"
-            @click="console.log('salvar')"
+            :disabled="disabledBtnCadastrar || loading"
+            @click="cadastrar()"
           >
             Cadastrar
           </button>
@@ -213,21 +243,26 @@ import { computed, onMounted, ref, watch } from "vue";
 import colors from "@/services/colors.js";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
-import { validarEmail, toTop } from "@/services/helper";
+import { validarEmail, toTop, removerMascara } from "@/services/helper";
+import { api } from "@/services/api";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const typePass = ref("password");
 const typeConfirmPass = ref("password");
+const loading = ref(false);
 
-const login = ref("");
-const nome = ref("");
-const email = ref("");
-const confirmeEmail = ref("");
-const celular = ref("");
-const senha = ref("");
-const confirmeSenha = ref("");
-const patrocinador = ref("");
-const termosECondicoes = ref(false);
-const politicaDePrivacidade = ref(false);
+const login = ref("ericbaumbach");
+const nome = ref("teste");
+const email = ref("teste@teste.com");
+const confirmeEmail = ref("teste@teste.com");
+const cpfCnpj = ref("111.111.111-11");
+const celular = ref("(41) 98877-6655");
+const senha = ref("teste@teste.com");
+const confirmeSenha = ref("teste@teste.com");
+const patrocinador = ref("teste");
+const termosECondicoes = ref(true);
+const politicaDePrivacidade = ref(true);
 
 const disabledBtnCadastrar = computed(
   () =>
@@ -237,6 +272,8 @@ const disabledBtnCadastrar = computed(
     !confirmeEmail.value ||
     !!emailIncompativel.value ||
     !emailReal.value ||
+    !cpfCnpj.value ||
+    cpfCnpj.value.length < 14 ||
     celular.value.length < 15 ||
     !senha.value ||
     senha.value.length < 8 ||
@@ -306,6 +343,54 @@ watch(celular, () => {
 onMounted(() => {
   toTop();
 });
+
+const cadastrar = async () => {
+  if (disabledBtnCadastrar.value) {
+    return toast(
+      "Preencha todos os campos corretamente para finalizar o cadastro",
+      {
+        type: "error",
+        autoClose: false,
+      }
+    );
+  }
+
+  loading.value = true;
+
+  try {
+    const form = {
+      nome: nome.value,
+      documento: removerMascara(cpfCnpj.value),
+      login: login.value,
+      email: email.value,
+      confirmEmail: confirmeEmail.value,
+      loginPatrocinador: patrocinador.value,
+      celular: removerMascara(celular.value),
+      senha: senha.value,
+    };
+
+    console.log(form);
+    await api.post("/user/registrar", form);
+
+    toast("Cadastrado com sucesso!", {
+      type: "success",
+      autoClose: 3000,
+    });
+    return router.push("/login");
+  } catch (err) {
+    if (err?.response && err?.response?.data) {
+      const erros = err.response.data?.erros;
+      erros.forEach((erro) => {
+        return toast(erro.mensagem, {
+          type: "error",
+          autoClose: false,
+        });
+      });
+    }
+  } finally {
+    loading.value = false;
+  }
+};
 </script>
 
 <style lang="scss" scoped></style>

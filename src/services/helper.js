@@ -29,3 +29,8 @@ export const validarEmail = (email) => {
   var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);
 };
+
+export const removerMascara = (itemComMascara) => {
+  const itemSemMascara = itemComMascara.replace(/\D/g, "");
+  return itemSemMascara;
+};

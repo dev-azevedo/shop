@@ -111,6 +111,8 @@ import { ref } from "vue";
 import { AuthStore } from "@/stores/Auth";
 import { useRouter } from "vue-router";
 import LoadingIcon from "@/components/LoadingIcon/Main.vue";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 const auth = AuthStore();
 const router = useRouter();
@@ -141,7 +143,15 @@ const entrar = async () => {
 
     router.push("/");
   } catch (err) {
-    console.log(err);
+    if (err?.response && err?.response?.data) {
+      const erros = err.response.data?.erros;
+      erros.forEach((erro) => {
+        return toast(erro.mensagem, {
+          type: "error",
+          autoClose: false,
+        });
+      });
+    }
   } finally {
     isLoading.value = false;
   }
