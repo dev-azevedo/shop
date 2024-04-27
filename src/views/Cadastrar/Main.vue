@@ -100,13 +100,13 @@
                 v-if="typePass == 'password'"
                 @click="typePass = 'text'"
                 class="cursor-pointer"
-                color="colors.primary"
+                :color="colors.primary"
               />
               <EyeOff
                 v-else
                 @click="typePass = 'password'"
                 class="cursor-pointer"
-                color="colors.primary"
+                :color="colors.primary"
               />
             </div>
           </div>
@@ -126,13 +126,13 @@
                 v-if="typeConfirmPass == 'password'"
                 @click="typeConfirmPass = 'text'"
                 class="cursor-pointer"
-                color="colors.primary"
+                :color="colors.primary"
               />
               <EyeOff
                 v-else
                 @click="typeConfirmPass = 'password'"
                 class="cursor-pointer"
-                color="colors.primary"
+                :color="colors.primary"
               />
             </div>
           </div>
@@ -209,10 +209,11 @@
 
 <script setup>
 import { Eye, EyeOff } from "lucide-vue-next";
-import { computed, ref, watch } from "vue";
-// import colors from "@/services/colors.js";
+import { computed, onMounted, ref, watch } from "vue";
+import colors from "@/services/colors.js";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
+import { validarEmail, toTop } from "@/services/helper";
 
 const typePass = ref("password");
 const typeConfirmPass = ref("password");
@@ -235,7 +236,7 @@ const disabledBtnCadastrar = computed(
     !email.value ||
     !confirmeEmail.value ||
     !!emailIncompativel.value ||
-    !!emailReal.value ||
+    !emailReal.value ||
     celular.value.length < 15 ||
     !senha.value ||
     senha.value.length < 8 ||
@@ -250,22 +251,24 @@ const emailIncompativel = computed(
   () => email.value && confirmeEmail.value && email.value != confirmeEmail.value
 );
 
-const emailReal = computed(() => !email.value.includes("@", "."));
+const emailReal = computed(() => validarEmail(email.value));
 
 const senhaIncompativel = computed(
   () => senha.value && confirmeSenha.value && senha.value != confirmeSenha.value
 );
 
-watch([emailIncompativel, emailReal], () => {
-  if (emailIncompativel.value) {
-    return toast("Email incompatível. Preencha corretamente.", {
+watch(email, () => {
+  if (!emailReal.value) {
+    toast("Email inválido. Preencha corretamente.", {
       type: "error",
       autoClose: false,
     });
   }
+});
 
-  if (emailReal.value) {
-    toast("Email inválido. Preencha corretamente.", {
+watch(emailIncompativel, () => {
+  if (emailIncompativel.value) {
+    return toast("Email incompatível. Preencha corretamente.", {
       type: "error",
       autoClose: false,
     });
@@ -298,6 +301,10 @@ watch(celular, () => {
       autoClose: false,
     });
   }
+});
+
+onMounted(() => {
+  toTop();
 });
 </script>
 

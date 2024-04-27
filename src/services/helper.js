@@ -24,3 +24,8 @@ export const toTop = () => {
     behavior: "smooth",
   });
 };
+
+export const validarEmail = (email) => {
+  var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+};
