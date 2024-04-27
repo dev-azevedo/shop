@@ -36,7 +36,7 @@
         </p>
 
         <div class="flex flex-col mt-10">
-          <label for="" class="text-gray-600">login</label>
+          <label class="text-gray-600 mb-2">Login</label>
           <input
             class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
@@ -46,7 +46,7 @@
         </div>
 
         <div class="flex flex-col mt-5">
-          <label for="" class="text-gray-600">Nome</label>
+          <label for="" class="text-gray-600 mb-2">Nome</label>
           <input
             class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
@@ -56,7 +56,7 @@
         </div>
 
         <div class="flex flex-col mt-5">
-          <label for="" class="text-gray-600">E-mail</label>
+          <label for="" class="text-gray-600 mb-2">E-mail</label>
           <input
             class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
@@ -66,44 +66,34 @@
         </div>
 
         <div class="flex flex-col mt-5">
-          <label for="" class="text-gray-600">Confirme seu e-mail</label>
+          <label for="" class="text-gray-600 mb-2">Confirme seu e-mail</label>
           <input
             class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
             placeholder="Digite seu e-mail novamente"
-            v-model="confirmeEmail"
+            v-model.lazy="confirmeEmail"
           />
         </div>
 
-        <div
-          class="text-red-400 ease-in duration-200 h-0"
-          :class="{
-            'opacity-100': emailIncompativel,
-            'h-4': emailIncompativel,
-            'opacity-0': !emailIncompativel,
-          }"
-        >
-          Email incompatível, preencha corretamente.
-        </div>
-
         <div class="flex flex-col mt-5">
-          <label for="" class="text-gray-600">Celular</label>
+          <label for="" class="text-gray-600 mb-2">Celular</label>
           <input
             class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
             placeholder="Digite seu celular. Ex: (00) 00000-0000"
-            v-model="celular"
+            v-mask="'(##) #####-####'"
+            v-model.lazy="celular"
           />
         </div>
 
         <div class="flex flex-col mt-5">
-          <label for="" class="text-gray-600">Senha</label>
+          <label for="" class="text-gray-600 mb-2">Senha</label>
           <div class="w-full relative">
             <input
               class="bg-gray-100 p-3 rounded-lg outline-quanta-shop w-full disabled:opacity-50"
               :type="typePass"
               placeholder="Digite sua senha"
-              v-model="senha"
+              v-model.lazy="senha"
             />
             <div class="absolute top-3 right-2">
               <Eye
@@ -123,13 +113,13 @@
         </div>
 
         <div class="flex flex-col mt-5">
-          <label for="" class="text-gray-600">Confirme sua senha</label>
+          <label for="" class="text-gray-600 mb-2">Confirme sua senha</label>
           <div class="w-full relative">
             <input
               class="bg-gray-100 p-3 rounded-lg outline-quanta-shop w-full disabled:opacity-50"
               :type="typeConfirmPass"
               placeholder="Digite sua senha novamente"
-              v-model="confirmeSenha"
+              v-model.lazy="confirmeSenha"
             />
             <div class="absolute top-3 right-2">
               <Eye
@@ -148,18 +138,8 @@
           </div>
         </div>
 
-        <div
-          class="text-red-400 ease-in duration-200 h-0"
-          :class="{
-            'opacity-100': senhaIncompativel,
-            'h-4': senhaIncompativel,
-            'opacity-0': !senhaIncompativel,
-          }"
-        >
-          Senha incompatível, preencha corretamente.
-        </div>
         <div class="flex flex-col mt-5">
-          <label for="" class="text-gray-600">Patrocinador</label>
+          <label for="" class="text-gray-600 mb-2">Patrocinador</label>
           <input
             class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
@@ -208,6 +188,7 @@
             type="button"
             class="bg-quanta-shop p-3 rounded-lg text-gray-50 font-semibold disabled:opacity-50"
             :disabled="disabledBtnCadastrar"
+            @click="console.log('salvar')"
           >
             Cadastrar
           </button>
@@ -228,7 +209,9 @@
 
 <script setup>
 import { Eye, EyeOff } from "lucide-vue-next";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 const typePass = ref("password");
 const typeConfirmPass = ref("password");
@@ -251,7 +234,10 @@ const disabledBtnCadastrar = computed(
     !email.value ||
     !confirmeEmail.value ||
     !!emailIncompativel.value ||
+    !!emailReal.value ||
+    celular.value.length < 15 ||
     !senha.value ||
+    senha.value.length < 8 ||
     !confirmeSenha.value ||
     !!senhaIncompativel.value ||
     !patrocinador.value ||
@@ -262,9 +248,56 @@ const disabledBtnCadastrar = computed(
 const emailIncompativel = computed(
   () => email.value && confirmeEmail.value && email.value != confirmeEmail.value
 );
+
+const emailReal = computed(() => !email.value.includes("@", "."));
+
 const senhaIncompativel = computed(
   () => senha.value && confirmeSenha.value && senha.value != confirmeSenha.value
 );
+
+watch([emailIncompativel, emailReal], () => {
+  if (emailIncompativel.value) {
+    return toast("Email incompatível. Preencha corretamente.", {
+      type: "error",
+      autoClose: false,
+    });
+  }
+
+  if (emailReal.value) {
+    toast("Email inválido. Preencha corretamente.", {
+      type: "error",
+      autoClose: false,
+    });
+  }
+});
+
+watch([senha, senhaIncompativel], () => {
+  if (senha.value.length < 8) {
+    return toast(
+      `Senha muito curta. Informe uma senha de pelo menos 8 caracteres.`,
+      {
+        type: "error",
+        autoClose: false,
+      }
+    );
+  }
+
+  if (senhaIncompativel.value) {
+    return toast(`Senha incompativel. Preencha corretamente.`, {
+      type: "error",
+      autoClose: false,
+    });
+  }
+});
+
+watch(celular, () => {
+  if (celular.value.length < 15) {
+    return toast(`Celular inválido. Preencha corretamente.`, {
+      type: "error",
+      autoClose: false,
+    });
+  }
+});
 </script>
 
 <style lang="scss" scoped></style>
