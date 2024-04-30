@@ -3,10 +3,10 @@
     <BannerHone class="w-full" />
     <CarrosselCategorias class="mt-10" />
     <div v-if="maioresCategorias.length === 0">
-      <CarouselItems v-for="carousel in 6" :key="carousel" class="mt-10" />
+      <CarrosselItems v-for="carrossel in 6" :key="carrossel" class="mt-10" />
     </div>
     <div v-else>
-      <CarouselItems
+      <CarrosselItems
         v-for="categoria in maioresCategorias"
         :key="categoria.idCategoria"
         :title="categoria.nome"
@@ -21,7 +21,7 @@
 
 <script setup>
 import BannerHone from "@/components/BannerHome/Main.vue";
-import CarouselItems from "@/components/CarouselItems/Main.vue";
+import CarrosselItems from "@/components/CarrosselItems/Main.vue";
 import CarrosselCategorias from "@/components/CarrosselCategorias/Main.vue";
 import { onMounted, ref } from "vue";
 import { api } from "@/services/api.js";

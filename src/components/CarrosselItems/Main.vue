@@ -32,7 +32,7 @@
       :breakpoints="breakpoints"
     >
       <slide v-for="slide in 12" :key="slide" class="w-full rounded-xl">
-        <ItemCarousel />
+        <ItemCarrossel />
       </slide>
 
       <template #addons>
@@ -52,7 +52,7 @@
         :key="index"
         class="w-full rounded-xl"
       >
-        <ItemCarousel :anuncio="anuncio" :nomeCategoria="props.title" />
+        <ItemCarrossel :anuncio="anuncio" :nomeCategoria="props.title" />
       </slide>
 
       <template #addons> <navigation /> </template>
@@ -64,7 +64,7 @@
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import { defineProps } from "vue";
-import ItemCarousel from "./ItemCarousel.vue";
+import ItemCarrossel from "./ItemCarrossel.vue";
 
 const settings = {
   itemsToShow: 1,

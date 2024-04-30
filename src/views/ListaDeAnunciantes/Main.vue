@@ -16,7 +16,7 @@
       <div
         class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 justify-center"
       >
-        <ItemCarousel
+        <ItemCarrossel
           v-for="anuncio in anunciantes"
           :key="anuncio.idCategoria"
           :anuncio="anuncio"
@@ -71,7 +71,7 @@
 import { onMounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { buscarItemDaCategoria, toTop } from "@/services/helper.js";
-import ItemCarousel from "@/components/CarouselItems/ItemCarousel.vue";
+import ItemCarrossel from "@/components/CarrosselItems/ItemCarrossel.vue";
 import colors from "@/services/colors";
 import {
   ChevronLeft,

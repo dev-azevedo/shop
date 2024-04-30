@@ -18,8 +18,8 @@
     <div class="w-full h-1/2 flex items-center justify-center">
       <img
         :src="props.anuncio.imagemUrl"
-        class="rounded-md w-32 h-32"
-        alt="bg-center bg-cover"
+        class="rounded-md w-32 h-32 bg-center bg-cover"
+        :alt="props.anuncio.nome"
       />
     </div>
     <div
