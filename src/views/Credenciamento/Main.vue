@@ -16,6 +16,7 @@
           type="text"
           placeholder="Digite o login do patrocinador"
           v-model="loginPatrocionador"
+          :disabled="loading"
         />
       </div>
 
@@ -27,6 +28,7 @@
             type="text"
             placeholder="Digite o nome do responsável"
             v-model="nomeResponsavel"
+            :disabled="loading"
           />
         </div>
 
@@ -40,6 +42,7 @@
             placeholder="Digite o celular do responsável. Ex: (00) 00000-0000"
             v-mask="'(##) #####-####'"
             v-model.lazy="celularResponsavel"
+            :disabled="loading"
           />
         </div>
 
@@ -50,6 +53,7 @@
             type="text"
             placeholder="Digite o estabelecimento"
             v-model="estabelecimento"
+            :disabled="loading"
           />
         </div>
 
@@ -63,6 +67,7 @@
             placeholder="Digite o percentual de Cashback."
             v-mask="['#%', '##%', '##,#%', '##,##%']"
             v-model="percentualCashback"
+            :disabled="loading"
           />
         </div>
 
@@ -72,6 +77,7 @@
             class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             placeholder="Digite o percentual de Cashback."
             v-model="categoria"
+            :disabled="loading"
           >
             <option :value="null" disabled selected>
               Selecione a categoria
@@ -93,6 +99,7 @@
             type="text"
             placeholder="Digite o login"
             v-model="login"
+            :disabled="loading"
           />
         </div>
 
@@ -104,6 +111,7 @@
             placeholder="Digite o CPF ou CNPJ."
             v-mask="['###.###.###-##', '##.###.###/####-##']"
             v-model="cpfCnpj"
+            :disabled="loading"
           />
         </div>
 
@@ -117,6 +125,7 @@
             placeholder="Digite o celular do credenciado. Ex: (00) 00000-0000"
             v-mask="'(##) #####-####'"
             v-model.lazy="celularCredenciado"
+            :disabled="loading"
           />
         </div>
 
@@ -127,6 +136,7 @@
             type="text"
             placeholder="Digite seu e-mail"
             v-model.lazy="email"
+            :disabled="loading"
           />
         </div>
 
@@ -137,6 +147,7 @@
             type="text"
             placeholder="Digite seu e-mail novamente"
             v-model.lazy="confirmeEmail"
+            :disabled="loading"
           />
         </div>
 
@@ -148,6 +159,7 @@
               :type="typePass"
               placeholder="Digite sua senha"
               v-model.lazy="senha"
+              :disabled="loading"
             />
             <div class="absolute top-3 right-2">
               <Eye
@@ -174,6 +186,7 @@
               :type="typeConfirmPass"
               placeholder="Digite sua senha novamente"
               v-model.lazy="confirmeSenha"
+              :disabled="loading"
             />
             <div class="absolute top-3 right-2">
               <Eye
@@ -198,7 +211,10 @@
         <label
           for="inputFile"
           class="border-dashed border-2 text-center bg-gray-100 text-gray-300 font-medium p-3 rounded-lg outline-quanta-shop w-full"
-          :class="{ 'opacity-50': loadingCep, 'cursor-pointer': !loadingCep }"
+          :class="{
+            'opacity-50': loadingCep || loading,
+            'cursor-pointer': !loading,
+          }"
         >
           <span v-if="!logo?.name">Importe sua logo aqui</span>
           <span v-else class="text-gray-800">
@@ -209,9 +225,13 @@
           id="inputFile"
           type="file"
           class="hidden"
-          :disabled="loadingCep"
+          :disabled="loadingCep || loading"
           @change.prevent="pegarLogo($event)"
         />
+
+        <div class="w-full my-3 flex justify-center bg-gray-100 rounded-md">
+          <img v-if="imageBase64" class="w-56" :src="imageBase64" alt="" />
+        </div>
       </div>
 
       <hr class="w-full border-b border-gray-300 my-5" />
@@ -227,7 +247,7 @@
               type="text"
               placeholder="Digite seu CEP"
               v-mask="'#####-###'"
-              :disabled="loadingCep"
+              :disabled="loadingCep || loading"
               v-model="cep"
             />
             <LoadingIcon v-show="loadingCep" class="absolute right-2 top-2" />
@@ -239,7 +259,7 @@
             class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
             placeholder="Digite o nome rua"
-            :disabled="loadingCep"
+            :disabled="loadingCep || loading"
             v-model="rua"
           />
         </div>
@@ -250,7 +270,7 @@
             class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
             placeholder="Digite a cidade"
-            :disabled="loadingCep"
+            :disabled="loadingCep || loading"
             v-model="cidade"
           />
         </div>
@@ -261,7 +281,7 @@
             class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
             placeholder="Digite o bairro"
-            :disabled="loadingCep"
+            :disabled="loadingCep || loading"
             v-model="bairro"
           />
         </div>
@@ -272,7 +292,7 @@
             class="bg-gray-100 p-3 rounded-lg outline-quanta-shop disabled:opacity-50"
             type="text"
             placeholder="Digite o estado UF"
-            :disabled="loadingCep"
+            :disabled="loadingCep || loading"
             v-model="estado"
           />
         </div>
@@ -284,7 +304,7 @@
             type="text"
             placeholder="Digite o número do local"
             v-mask="'###########'"
-            :disabled="loadingCep"
+            :disabled="loadingCep || loading"
             v-model="numero"
           />
         </div>
@@ -297,6 +317,7 @@
           type="text"
           placeholder="Digite o complemento"
           v-model="complemento"
+          :disabled="loading"
         />
       </div>
 
@@ -305,8 +326,10 @@
           <input
             type="checkbox"
             :value="false"
-            class="accent-lime-400 w-4 cursor-pointer disabled:opacity-50"
+            class="accent-lime-400 w-4 disabled:opacity-50"
+            :class="{ 'cursor-pointer': !loading }"
             v-model="termosECondicoes"
+            :disabled="loading"
           />
           <p>
             Li e concordo com os
@@ -323,8 +346,10 @@
           <input
             type="checkbox"
             :value="false"
-            class="accent-lime-400 w-4 cursor-pointer disabled:opacity-50"
+            class="accent-lime-400 w-4 disabled:opacity-50"
+            :class="{ 'cursor-pointer': !loading }"
             v-model="politicaDePrivacidade"
+            :disabled="loading"
           />
           <p>
             Li e concordo com as
@@ -341,11 +366,12 @@
       <div class="flex flex-col mt-8">
         <button
           type="button"
-          class="bg-quanta-shop p-3 rounded-lg text-gray-50 font-semibold disabled:opacity-50"
-          :disabled="disabledBtnCadastrar || loadingCep"
-          @click="console.log('salvar')"
+          class="bg-quanta-shop p-3 rounded-lg text-gray-50 flex justify-center font-semibold disabled:opacity-50"
+          :disabled="disabledBtnCadastrar || loadingCep || loading"
+          @click="cadastrarCredenciado"
         >
-          Cadastrar
+          <span v-if="!loading">Enviar credenciamento para análise</span>
+          <LoadingIcon v-else />
         </button>
       </div>
     </form>
@@ -366,6 +392,7 @@ const typePass = ref("password");
 const typeConfirmPass = ref("password");
 
 const loadingCep = ref(false);
+const loading = ref(false);
 const listaCategorias = ref([]);
 const arquivosAceitos = ref(["png", "jpg", "jpeg"]);
 
@@ -383,12 +410,15 @@ const confirmeEmail = ref(null);
 const senha = ref(null);
 const confirmeSenha = ref(null);
 const logo = ref({});
+const imageBase64 = ref({});
 
 const cep = ref(null);
 const rua = ref(null);
 const cidade = ref(null);
+const idCidade = ref(null);
 const bairro = ref(null);
 const estado = ref(null);
+const idEstado = ref(null);
 const numero = ref(null);
 const complemento = ref(null);
 const termosECondicoes = ref(null);
@@ -494,10 +524,10 @@ onMounted(() => {
   obterCategoria();
   toTop();
 });
+
 const buscarPorCep = async (cepUnmask) => {
   loadingCep.value = true;
   const { data } = await api.get(`https://viacep.com.br/ws/${cepUnmask}/json/`);
-  console.log(data);
 
   if (data?.erro) {
     loadingCep.value = false;
@@ -512,13 +542,49 @@ const buscarPorCep = async (cepUnmask) => {
   rua.value = data.logradouro;
   estado.value = data.uf;
 
+  await buscarEstados();
   loadingCep.value = false;
+};
+
+const buscarEstados = async () => {
+  try {
+    const { data } = await api.get("/Geral/buscaEstado");
+
+    const estadoApi = data.find((est) => est.uf == estado.value);
+
+    if (estadoApi != null) {
+      idEstado.value = estadoApi.idEstado;
+      await buscarCidades();
+    }
+  } catch {
+    return toast("Algo deu errado ao buscar estados.", {
+      type: "error",
+      autoClose: false,
+    });
+  }
+};
+
+const buscarCidades = async () => {
+  try {
+    const { data } = await api.get("/Geral/buscaCidade/" + idEstado.value);
+
+    const cidadeAPi = data.find((estado) => estado.nome == cidade.value);
+
+    if (cidadeAPi != null) {
+      idCidade.value = cidadeAPi.idCidade;
+    }
+  } catch {
+    return toast("Algo deu errado ao buscar cidades.", {
+      type: "error",
+      autoClose: false,
+    });
+  }
 };
 
 const obterCategoria = async () => {
   try {
     const { data } = await api.get("/Geral/ObterCategorias");
-    console.log(data);
+
     listaCategorias.value = data;
   } catch {
     return toast(
@@ -537,10 +603,108 @@ const pegarLogo = (e) => {
   [...files].map((file) => {
     const ext = file?.name.split(".").pop();
     if (arquivosAceitos.value.includes(ext)) {
-      console.log(file);
       logo.value = file;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        imageBase64.value = event.target.result;
+      };
+
+      reader.readAsDataURL(file);
     }
   });
+};
+
+const cadastrarCredenciado = async () => {
+  loading.value = true;
+  let cashBackTratado = percentualCashback.value
+    .replace("%", "")
+    .replace(",", ".");
+  const cashback = parseFloat(cashBackTratado);
+
+  const form = {
+    estabelecimento: estabelecimento.value,
+    idCategoria: categoria.value,
+    cep: cep.value,
+    rua: rua.value,
+    telefone: celularResponsavel.value,
+    celularContato: celularCredenciado.value,
+    bairro: bairro.value,
+    complemento: complemento.value,
+    numero: numero.value,
+    idEstado: idEstado.value,
+    idCidade: idCidade.value,
+    faturamentoMensal: 0,
+    contactado: false,
+    loginPatrocinador: loginPatrocionador.value,
+    cnpj: cpfCnpj.value,
+    email: email.value,
+    confirmEmail: confirmeEmail.value,
+    loginResponsavel: login.value,
+    nomeResponsavel: nomeResponsavel.value,
+    senhaResponsavel: senha.value,
+    confirmSenhaResponsavel: confirmeSenha.value,
+    percentualCashback: cashback,
+    latitude: "",
+    longitude: "",
+  };
+
+  try {
+    await api.post("/Credenciamento", form);
+
+    toast("Enviado para análise!", {
+      type: "success",
+      autoClose: 3000,
+    });
+
+    resetForm();
+  } catch (err) {
+    if (err?.response && err?.response?.data) {
+      const erros = err.response.data?.erros;
+      erros.forEach((erro) => {
+        return toast(erro.mensagem, {
+          type: "error",
+          autoClose: false,
+        });
+      });
+    }
+  } finally {
+    loading.value = false;
+  }
+};
+
+const resetForm = () => {
+  typePass.value = "password";
+  typeConfirmPass.value = "password";
+  loadingCep.value = false;
+  loading.value = false;
+
+  loginPatrocionador.value = null;
+  nomeResponsavel.value = null;
+  celularResponsavel.value = null;
+  estabelecimento.value = null;
+  percentualCashback.value = null;
+  categoria.value = null;
+  login.value = null;
+  cpfCnpj.value = null;
+  celularCredenciado.value = null;
+  email.value = null;
+  confirmeEmail.value = null;
+  senha.value = null;
+  confirmeSenha.value = null;
+  logo.value = {};
+  imageBase64.value = {};
+  cep.value = null;
+  rua.value = null;
+  cidade.value = null;
+  idCidade.value = null;
+  bairro.value = null;
+  estado.value = null;
+  idEstado.value = null;
+  numero.value = null;
+  complemento.value = null;
+  termosECondicoes.value = null;
+  politicaDePrivacidade.value = null;
 };
 </script>
 
