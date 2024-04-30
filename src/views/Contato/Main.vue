@@ -64,35 +64,21 @@
         />
       </div>
     </div>
-    <div
-      class="p-2 text-center text-white rounded-md ease-in duration-200"
-      :class="{
-        'bg-quanta-shop-secondary': notificacao.sucesso,
-        'bg-red-600': !notificacao.sucesso,
-        'opacity-0': !notificacao.show,
-        'opacity-100': notificacao.show,
-      }"
-    >
-      {{ notificacao.mensagem }}
-    </div>
   </section>
 </template>
 
 <script setup>
 import { api } from "@/services/api";
-import { computed, onMounted, reactive, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import LoadingIcon from "@/components/LoadingIcon/Main.vue";
 import { toTop } from "@/services/helper";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 const nome = ref("");
 const email = ref("");
 const mensagemEmail = ref("");
 const loading = ref(false);
-const notificacao = reactive({
-  show: false,
-  mensagem: null,
-  sucesso: false,
-});
 
 const disabledBtnEnviar = computed(
   () => !nome.value || !email.value || !mensagemEmail.value
@@ -123,21 +109,13 @@ const validacaoDeEmail = () => {
   return { validacao: true };
 };
 
-const configNotificacao = (mensagem, sucesso) => {
-  notificacao.show = true;
-  notificacao.mensagem = mensagem;
-  notificacao.sucesso = sucesso;
-
-  setTimeout(() => {
-    notificacao.show = false;
-  }, 3000);
-};
-
 const enviarEmail = async () => {
   const valido = validacaoDeEmail();
   if (!valido.validacao) {
-    configNotificacao(valido.mensagem, valido.validacao);
-    return;
+    return toast(valido.mensagem, {
+      type: "error",
+      autoClose: false,
+    });
   }
 
   loading.value = true;
@@ -149,10 +127,24 @@ const enviarEmail = async () => {
       tipoContato: 1,
     });
 
-    configNotificacao("Email enviado com sucesso!", true);
+    nome.value = "";
+    email.value = "";
+    mensagemEmail.value = "";
+
+    return toast("Contato enviado com sucesso!", {
+      type: "success",
+      autoClose: 3000,
+    });
   } catch (err) {
-    console.log(err);
-    configNotificacao("Algo deu errado. Tente novamente", false);
+    if (err?.response && err?.response?.data) {
+      const erros = err.response.data?.erros;
+      erros.forEach((erro) => {
+        return toast(erro.mensagem, {
+          type: "error",
+          autoClose: false,
+        });
+      });
+    }
   } finally {
     loading.value = false;
   }
