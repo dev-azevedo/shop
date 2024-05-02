@@ -1,5 +1,5 @@
 <template>
-  <section class="px-10 2xl:px-80">
+  <section>
     <div class="my-10">
       <h1 class="text-4xl text-quanta-shop font-semibold">Cadastre-se</h1>
       <p class="text-sm text-gray-400">

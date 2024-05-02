@@ -40,11 +40,12 @@
 
       <div class="w-full text-start">
         <p class="text-gray-400 text-sm text-center mb-1">
-          Aproveite esta oportunidade
+          Aproveite essa oportunidade
         </p>
 
         <button
           class="w-full text-start py-1 bg-gray-100 border-1 border-t-1 border-gray-800 rounded-b-md"
+          @click="detalhesCredenciado()"
         >
           <p class="text-sm flex items-center justify-center gap-1 p-1 xl:pl-5">
             Até {{ props.anuncio.cashback
@@ -60,11 +61,14 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted } from "vue";
+import { defineProps } from "vue";
 import { CircleDollarSign, Store } from "lucide-vue-next";
 import colors from "@/services/colors";
 import { capitalize } from "@/services/helper";
 
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 const props = defineProps(["anuncio", "nomeCategoria", "loading"]);
 
 const tipoCashback = {
@@ -72,9 +76,14 @@ const tipoCashback = {
   value: "R$",
 };
 
-onMounted(() => {
-  console.log(props.anuncio);
-});
+const detalhesCredenciado = async () => {
+  router.push({
+    name: "detalhesCredenciado",
+    params: {
+      id: props.anuncio.idCredenciamento,
+    },
+  });
+};
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,4 +1,5 @@
 import { api } from "./api.js";
+import { mask } from "remask";
 
 export const buscarItemDaCategoria = async (
   idCategoria,
@@ -38,4 +39,8 @@ export const removerMascara = (itemComMascara) => {
 export const capitalize = (text) => {
   const formatText = text.toLowerCase();
   return formatText.charAt(0).toUpperCase() + formatText.slice(1).toLowerCase();
+};
+
+export const mascaraTelefone = (contato) => {
+  return mask(contato, "(99) 99999-9999");
 };

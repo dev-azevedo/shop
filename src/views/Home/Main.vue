@@ -1,5 +1,5 @@
 <template>
-  <section class="px-10 2xl:px-80">
+  <section>
     <BannerHone class="w-full" />
     <CarrosselCategorias class="mt-10" />
     <div v-if="maioresCategorias.length === 0">
@@ -38,7 +38,6 @@ onMounted(() => {
 const obterCategorias = async () => {
   const { data } = await api.post("Anunciante/obterCategorias/", { nome: "" });
 
-  //Ordenei a lista por numero de categorias e peguei as 6 que tem mais
   if (data) {
     maioresCategorias.value = data.slice(0, 8);
 

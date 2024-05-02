@@ -25,7 +25,7 @@
       </router-link>
     </div>
 
-    <carousel v-if="!anuncios" v-bind="settings" :breakpoints="breakpoints">
+    <carousel v-if="!anuncios" :breakpoints="breakpoints">
       <slide v-for="slide in 12" :key="slide" class="w-full rounded-xl">
         <ItemCarrossel />
       </slide>

@@ -1,6 +1,6 @@
 <template>
   <section
-    class="bg-gray-400 py-20 px-10 2xl:px-80 flex flex-col lg:flex-row justify-between items-center relative"
+    class="bg-gray-400 py-20 flex flex-col lg:flex-row justify-between items-center relative"
   >
     <div class="w-56 mb-10 lg:mb-auto">
       <img src="../../assets/img/logo-quanta-shop-branca.b701cc1c.png" alt="" />

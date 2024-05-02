@@ -3,7 +3,6 @@
     <!-- Skeleton loading -->
     <carousel
       v-if="anunciantesAleatorios.length == 0"
-      v-bind="settings"
       :wrap-around="true"
       :breakpoints="breakpoints"
     >
@@ -25,7 +24,6 @@
 
     <carousel
       v-else
-      v-bind="settings"
       :autoplay="1000"
       :wrap-around="true"
       :breakpoints="breakpoints"
@@ -52,11 +50,6 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import { onMounted, ref } from "vue";
 import { api } from "@/services/api";
-
-const settings = {
-  itemsToShow: 1,
-  snapAlign: "left",
-};
 
 const anunciantesAleatorios = ref([]);
 

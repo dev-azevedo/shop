@@ -19,22 +19,22 @@
       </template>
     </carousel>
 
-    <div v-else class="flex justify-center gap-1 -mt-10 xl:mt-0">
-      <div class="flex flex-col gap-1">
+    <div v-else class="flex justify-center gap-3 -mt-10 xl:mt-5">
+      <div class="flex flex-col gap-10">
         <img
           class="img"
-          src="@/assets/img/Banner-Quanta-Bank-01.4c6b3467.jpg"
+          src="../../assets/img/550x250-Aliexpress.jpg"
           style="width: 570px; height: 250px !important"
         />
         <img
           class="img"
-          src="@/assets/img/Banner-Quanta-Bank-02.04a94fbc.jpg"
+          src="../../assets/img/550x250-Kabum.jpg"
           style="width: 570px; height: 250px !important"
         />
       </div>
       <img
         class="img"
-        src="@/assets/img/BannerMob-Quanta-Bank-03.b38faa7e.jpg"
+        src="../../assets/img/570x500-Beleza-na-web.jpg"
         style="width: 570px; height: 504px !important"
       />
     </div>

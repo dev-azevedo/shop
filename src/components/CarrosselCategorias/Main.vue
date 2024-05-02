@@ -4,12 +4,14 @@
       v-if="categorias.length == 0"
       class="w-56 p-4 rounded-md bg-gray-200 animate-pulse mb-5"
     ></div>
-    <h3 v-else class="font-bold text-2xl mb-5 text-quanta-shop">Categorias</h3>
+    <h3 v-else class="font-bold text-2xl mb-5 text-quanta-shop">
+      <span v-if="auth.getUser.token">Categorias destaques</span>
+      <span v-else>Categorias </span>
+    </h3>
 
     <!-- Skeleton loading -->
     <carousel
       v-if="categorias.length == 0"
-      v-bind="settings"
       :wrap-around="true"
       :breakpoints="breakpoints"
     >
@@ -31,7 +33,6 @@
 
     <carousel
       v-else
-      v-bind="settings"
       :wrap-around="true"
       :breakpoints="breakpoints"
       :transition="500"
@@ -72,12 +73,10 @@ import { onMounted, ref } from "vue";
 import { api } from "@/services/api";
 import { ShoppingCart } from "lucide-vue-next";
 import { useRouter } from "vue-router";
+import { AuthStore } from "@/stores/Auth";
 
+const auth = AuthStore();
 const router = useRouter();
-const settings = {
-  itemsToShow: 1,
-  snapAlign: "left",
-};
 
 const categorias = ref([]);
 
@@ -108,6 +107,13 @@ const breakpoints = {
 };
 
 const obterCategorias = async () => {
+  if (auth.getUser.token) {
+    // const { data } = await api.get("Categoria/obterCategoriasDestaque/");
+    // categorias.value = data;
+    // return;
+    console.log("teste");
+  }
+
   const { data } = await api.post("Anunciante/obterCategorias/", { nome: "" });
 
   categorias.value = data;

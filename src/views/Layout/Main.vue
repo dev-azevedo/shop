@@ -2,9 +2,9 @@
   <section class="">
     <Menu></Menu>
     <div class="w-full h-full min-h-screen p-2 mt-36 mb-10">
-      <router-view></router-view>
+      <router-view class="px-10 2xl:px-80"></router-view>
     </div>
-    <Footer></Footer>
+    <Footer class="px-10 2xl:px-80"></Footer>
   </section>
 </template>
 
