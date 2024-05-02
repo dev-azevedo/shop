@@ -8,7 +8,7 @@
       <h3
         class="font-bold text-2xl mb-5 text-center xl:text-start text-quanta-shop"
       >
-        {{ props.title }}
+        {{ capitalize(props.title) }}
       </h3>
 
       <router-link
@@ -25,12 +25,7 @@
       </router-link>
     </div>
 
-    <carousel
-      v-if="!anuncios"
-      v-bind="settings"
-      :wrap-around="true"
-      :breakpoints="breakpoints"
-    >
+    <carousel v-if="!anuncios" v-bind="settings" :breakpoints="breakpoints">
       <slide v-for="slide in 12" :key="slide" class="w-full rounded-xl">
         <ItemCarrossel />
       </slide>
@@ -42,9 +37,8 @@
 
     <carousel
       v-else
-      v-bind="settings"
-      :wrap-around="true"
       :breakpoints="breakpoints"
+      :wrapAround="anuncios.length > 4 ? true : false"
       :transition="500"
     >
       <slide
@@ -65,11 +59,7 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import { defineProps } from "vue";
 import ItemCarrossel from "./ItemCarrossel.vue";
-
-const settings = {
-  itemsToShow: 1,
-  snapAlign: "left",
-};
+import { capitalize } from "@/services/helper";
 
 const breakpoints = {
   420: {
@@ -84,11 +74,6 @@ const breakpoints = {
 
   1024: {
     itemsToShow: 4,
-    snapAlign: "start",
-  },
-
-  1920: {
-    itemsToShow: 5,
     snapAlign: "start",
   },
 };

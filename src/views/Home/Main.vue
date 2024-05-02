@@ -40,7 +40,6 @@ const obterCategorias = async () => {
 
   //Ordenei a lista por numero de categorias e peguei as 6 que tem mais
   if (data) {
-    console.log(data);
     maioresCategorias.value = data.slice(0, 8);
 
     maioresCategorias.value.map(async (categoria) => {

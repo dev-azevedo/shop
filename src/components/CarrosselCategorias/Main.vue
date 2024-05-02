@@ -41,25 +41,21 @@
         :key="categoria.idCategoria"
         class="p-0 m-0 hover:opacity-50 ease-in duration-200"
       >
-        <router-link
-          :to="{
-            name: 'categoria',
-            params: {
-              idCategoria: categoria.idCategoria,
-              nomeCategoria: categoria.nome,
-            },
-          }"
+        <div
           class="rounded-xl flex justify-top items-center flex-col h-52"
+          @mousemove.prevent
+          @mousedown.prevent
         >
-          <div
+          <button
+            @click="acessarCategoria(categoria.idCategoria, categoria.nome)"
             class="bg-quanta-shop h-24 w-24 rounded-full flex justify-center items-center"
           >
             <ShoppingCart size="50" color="#FFFFFF" />
-          </div>
+          </button>
           <p class="font-semibold">
             {{ categoria.nome }}
           </p>
-        </router-link>
+        </div>
       </slide>
 
       <template #addons>
@@ -75,7 +71,9 @@ import { Carousel, Slide, Navigation } from "vue3-carousel";
 import { onMounted, ref } from "vue";
 import { api } from "@/services/api";
 import { ShoppingCart } from "lucide-vue-next";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const settings = {
   itemsToShow: 1,
   snapAlign: "left",
@@ -113,6 +111,16 @@ const obterCategorias = async () => {
   const { data } = await api.post("Anunciante/obterCategorias/", { nome: "" });
 
   categorias.value = data;
+};
+
+const acessarCategoria = (idCategoria, nome) => {
+  router.push({
+    name: "categoria",
+    params: {
+      idCategoria: idCategoria,
+      nomeCategoria: nome,
+    },
+  });
 };
 </script>
 

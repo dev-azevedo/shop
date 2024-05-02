@@ -34,3 +34,8 @@ export const removerMascara = (itemComMascara) => {
   const itemSemMascara = itemComMascara.replace(/\D/g, "");
   return itemSemMascara;
 };
+
+export const capitalize = (text) => {
+  const formatText = text.toLowerCase();
+  return formatText.charAt(0).toUpperCase() + formatText.slice(1).toLowerCase();
+};

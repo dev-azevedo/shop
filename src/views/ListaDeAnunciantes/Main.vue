@@ -14,13 +14,14 @@
 
     <transition name="fade" class="mt-5">
       <div
-        class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 justify-center"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 justify-center"
       >
         <ItemCarrossel
           v-for="anuncio in anunciantes"
           :key="anuncio.idCategoria"
           :anuncio="anuncio"
           :nomeCategoria="nomeCategoria"
+          :loading="loadingCard"
           class="w-auto"
         />
       </div>
@@ -87,6 +88,7 @@ const anunciantes = ref([]);
 const pagina = ref(1);
 const totalPaginas = ref(0);
 const totalItens = ref(0);
+const loadingCard = ref(false);
 
 // const calcTotalDeItens = computed(() =>
 //   anunciantes.value.length == 12 ? totalItens.value : anunciantes.value.length
@@ -104,17 +106,27 @@ watch(pagina, () => {
 });
 
 const buscarItens = async () => {
-  if (idCategoria) {
-    const dados = await buscarItemDaCategoria(
-      +idCategoria,
-      pagina.value,
-      totalPaginas.value
-    );
+  try {
+    loadingCard.value = true;
 
-    totalItens.value = dados.quantidade * dados.totalPaginas;
+    if (idCategoria) {
+      const dados = await buscarItemDaCategoria(
+        +idCategoria,
+        pagina.value,
+        totalPaginas.value
+      );
 
-    anunciantes.value = dados.anunciantes;
-    totalPaginas.value = dados.totalPaginas;
+      totalItens.value = dados.quantidade * dados.totalPaginas;
+
+      anunciantes.value = dados.anunciantes;
+      totalPaginas.value = dados.totalPaginas;
+    }
+  } catch {
+    console.log("algo deu errado");
+  } finally {
+    setTimeout(() => {
+      loadingCard.value = false;
+    }, 500);
   }
 };
 </script>

@@ -308,7 +308,6 @@ const user = computed(() => auth.getUser);
 onMounted(() => {
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
-    console.log("Evento beforeinstallprompt capturado:", event);
   });
   window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
 });
@@ -326,19 +325,15 @@ const logout = () => {
 };
 
 const handleBeforeInstallPrompt = (event) => {
-  console.log("Evento beforeinstallprompt capturado:", event);
   beforeInstallPromptEvent.value = event;
 };
 
 const installApp = () => {
   if (beforeInstallPromptEvent.value) {
-    console.log(beforeInstallPromptEvent);
     beforeInstallPromptEvent.value.prompt();
     beforeInstallPromptEvent.value.userChoice.then((choiceResult) => {
       if (choiceResult.outcome === "accepted") {
         console.log("Usuário aceitou a instalação");
-      } else {
-        console.log("Usuário recusou a instalação");
       }
     });
   }

@@ -369,7 +369,6 @@ const cadastrar = async () => {
       senha: senha.value,
     };
 
-    console.log(form);
     await api.post("/user/registrar", form);
 
     toast("Cadastrado com sucesso!", {
