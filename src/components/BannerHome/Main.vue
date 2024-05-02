@@ -1,5 +1,5 @@
 <template>
-  <div class="hidden md:block">
+  <div class="hidden lg:block">
     <!-- Skeleton loading -->
     <carousel
       :autoplay="2000"
@@ -19,28 +19,28 @@
       </template>
     </carousel>
 
-    <carousel
-      v-else
-      :autoplay="2000"
-      :wrap-around="true"
-      :items-to-show="1"
-      class="rounded-md"
-    >
-      <slide
-        v-for="(img, index) in images"
-        :key="index"
-        class="hidden w-full rounded-md"
-      >
-        <img class="bg-cover bg-no-repeat bg-center rounded-md" :src="img" />
-      </slide>
-
-      <template #addons>
-        <navigation />
-      </template>
-    </carousel>
+    <div v-else class="flex justify-center gap-1 -mt-10 xl:mt-0">
+      <div class="flex flex-col gap-1">
+        <img
+          class="img"
+          src="@/assets/img/Banner-Quanta-Bank-01.4c6b3467.jpg"
+          style="width: 570px; height: 250px !important"
+        />
+        <img
+          class="img"
+          src="@/assets/img/Banner-Quanta-Bank-02.04a94fbc.jpg"
+          style="width: 570px; height: 250px !important"
+        />
+      </div>
+      <img
+        class="img"
+        src="@/assets/img/BannerMob-Quanta-Bank-03.b38faa7e.jpg"
+        style="width: 570px; height: 504px !important"
+      />
+    </div>
   </div>
 
-  <div class="md:hidden -mt-10">
+  <div class="lg:hidden -mt-10">
     <carousel
       :autoplay="2000"
       :wrap-around="true"
@@ -50,7 +50,7 @@
       <slide
         v-for="(img, index) in imagesMob"
         :key="index"
-        class="hidden w-5/6 bg-blue-300 rounded-md"
+        class="hidden w-5/6 rounded-md"
       >
         <img class="bg-cover bg-no-repeat bg-center rounded-md" :src="img" />
       </slide>
@@ -78,4 +78,10 @@ const images = ref([banner1, banner2, banner3]);
 const imagesMob = ref([bannerMob1, bannerMob2, bannerMob3]);
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.img {
+  background-repeat: no-repeat;
+  background-position: center !important;
+  background-size: cover !important;
+}
+</style>
