@@ -82,8 +82,8 @@ import {
 } from "lucide-vue-next";
 
 const route = useRoute();
-const idCategoria = route.params.idCategoria;
-const nomeCategoria = route.params.nomeCategoria;
+const idCategoria = computed(() => route.params.idCategoria);
+const nomeCategoria = computed(() => route.params.nomeCategoria);
 const anunciantes = ref([]);
 const pagina = ref(1);
 const totalPaginas = ref(0);
@@ -100,7 +100,7 @@ onMounted(() => {
   buscarItens();
 });
 
-watch(pagina, () => {
+watch([pagina, idCategoria], () => {
   toTop();
   buscarItens();
 });
@@ -109,9 +109,9 @@ const buscarItens = async () => {
   try {
     loadingCard.value = true;
 
-    if (idCategoria) {
+    if (idCategoria.value) {
       const dados = await buscarItemDaCategoria(
-        +idCategoria,
+        +idCategoria.value,
         pagina.value,
         totalPaginas.value
       );

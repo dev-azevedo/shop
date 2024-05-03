@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, onMounted } from "vue";
 import { CircleDollarSign, Store } from "lucide-vue-next";
 import colors from "@/services/colors";
 import { capitalize } from "@/services/helper";
@@ -75,6 +75,10 @@ const tipoCashback = {
   percentage: "%",
   value: "R$",
 };
+
+onMounted(() => {
+  console.log(props.anuncio);
+});
 
 const detalhesCredenciado = async () => {
   router.push({

@@ -13,8 +13,22 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
 .bg-quanta-shop {
   background-color: #286874;
+}
+
+.bg-quanta-shop-secondary-30 {
+  background-color: #98c73a30;
 }
 
 .bg-quanta-shop-secondary {
