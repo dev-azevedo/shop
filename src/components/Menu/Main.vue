@@ -151,6 +151,7 @@
       >
         <router-link
           @click="showCategorias = false"
+          class="hover:opacity-50 ease-in duration-200"
           :to="{
             name: 'categoria',
             params: {
@@ -248,9 +249,9 @@
               <button
                 type="button"
                 @click="showCategoriasMobile = true"
-                class="flex gap-2 items-center bg-red-300"
+                class="flex gap-2 items-center"
               >
-                <ShoppingBag :size="20" /> Categorias
+                <Layers3 :size="20" /> Categorias
               </button>
             </li>
             <li class="border-b border-gray-200 mb-3 p-1">
@@ -319,7 +320,7 @@
               </div>
             </div>
             <router-link
-              @click="showCategoriasMobile = false"
+              @click="(showCategoriasMobile = false), toggleOffcanvas()"
               class="border-b border-gray-200 p-1"
               :to="{
                 name: 'categoria',
@@ -359,6 +360,7 @@ import {
   MonitorDown,
   ArrowDown,
   ArrowUp,
+  Layers3,
 } from "lucide-vue-next";
 import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import { AuthStore } from "@/stores/Auth";
