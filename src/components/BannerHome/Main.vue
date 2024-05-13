@@ -70,9 +70,9 @@ import banner1 from "@/assets/img/Banner-Quanta-Bank-01.4c6b3467.jpg";
 import banner2 from "@/assets/img/Banner-Quanta-Bank-02.04a94fbc.jpg";
 import banner3 from "@/assets/img/Banner-Quanta-Bank-03.1b2e46db.jpg";
 
-import bannerMob1 from "@/assets/img/BannerMob-Quanta-Bank-01.300ade27.jpg";
-import bannerMob2 from "@/assets/img/BannerMob-Quanta-Bank-02.3534a3bb.jpg";
-import bannerMob3 from "@/assets/img/BannerMob-Quanta-Bank-03.b38faa7e.jpg";
+import bannerMob1 from "@/assets/img/550x250-Aliexpress.jpg";
+import bannerMob2 from "@/assets/img/550x250-Kabum.jpg";
+import bannerMob3 from "@/assets/img/570x500-Beleza-na-web.jpg";
 
 const images = ref([banner1, banner2, banner3]);
 const imagesMob = ref([bannerMob1, bannerMob2, bannerMob3]);

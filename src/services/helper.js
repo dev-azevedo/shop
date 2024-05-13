@@ -44,3 +44,10 @@ export const capitalize = (text) => {
 export const mascaraTelefone = (contato) => {
   return mask(contato, "(99) 99999-9999");
 };
+
+export const mascaraDinheiroReal = (dinheiro) => {
+  return dinheiro.toLocaleString("pt-br", {
+    style: "currency",
+    currency: "BRL",
+  });
+};

@@ -47,9 +47,28 @@
           class="w-full text-start py-1 bg-gray-100 border-1 border-t-1 border-gray-800 rounded-b-md"
           @click="detalhesCredenciado()"
         >
-          <p class="text-sm flex items-center justify-center gap-1 p-1 xl:pl-5">
-            Até {{ props.anuncio.cashback
-            }}{{ tipoCashback[props.anuncio.tipoCashback] }} de cashback
+          <p
+            v-if="props.anuncio.tipoCashback == 'value'"
+            class="text-sm flex items-center justify-center gap-1 p-1"
+          >
+            De {{ mascaraDinheiroReal(props.anuncio.cashbackMin) }} Até
+            {{ mascaraDinheiroReal(props.anuncio.cashbackMax) }} de cashback
+            <CircleDollarSign :size="16" :color="colors.secondary" />
+          </p>
+
+          <p
+            v-else-if="props.anuncio.tipoCashback == null"
+            class="text-sm flex items-center justify-center gap-1 p-1 xl:pl-5"
+          >
+            clique aqui para ver o cashback
+            <CircleDollarSign :size="16" :color="colors.secondary" />
+          </p>
+
+          <p
+            v-else
+            class="text-sm flex items-center justify-center gap-1 p-1 xl:pl-5"
+          >
+            Até % {{ props.anuncio.cashback }} de cashback
             <CircleDollarSign :size="16" :color="colors.secondary" />
           </p>
 
@@ -64,23 +83,19 @@
 import { defineProps, onMounted } from "vue";
 import { CircleDollarSign, Store } from "lucide-vue-next";
 import colors from "@/services/colors";
-import { capitalize } from "@/services/helper";
+import { capitalize, mascaraDinheiroReal } from "@/services/helper";
 
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const props = defineProps(["anuncio", "nomeCategoria", "loading"]);
 
-const tipoCashback = {
-  percentage: "%",
-  value: "R$",
-};
-
 onMounted(() => {
   console.log(props.anuncio);
 });
 
 const detalhesCredenciado = async () => {
+  // Validar idAnunciante ou idCredenciamento
   router.push({
     name: "detalhesCredenciado",
     params: {

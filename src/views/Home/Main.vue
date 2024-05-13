@@ -1,7 +1,7 @@
 <template>
   <section>
     <BannerHone class="w-full" />
-    <CarrosselCategorias class="mt-10" />
+    <CarrosselCategorias class="mt-16" />
     <div v-if="maioresCategorias.length === 0">
       <CarrosselItems v-for="carrossel in 6" :key="carrossel" class="mt-10" />
     </div>

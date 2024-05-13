@@ -94,7 +94,7 @@
     </div>
 
     <div class="w-full mt-20">
-      <CarrousselAnunciantes />
+      <CarrosselAnunciantes />
     </div>
   </section>
 </template>
@@ -104,7 +104,7 @@ import { api } from "@/services/api";
 import colors from "@/services/colors";
 import { ClipboardCheck, ClipboardPen, ShoppingBasket } from "lucide-vue-next";
 import { onMounted, ref } from "vue";
-import CarrousselAnunciantes from "@/components/CarrousselAnunciantes/Main.vue";
+import CarrosselAnunciantes from "@/components/CarrosselAnunciantes/Main.vue";
 import { toTop } from "@/services/helper.js";
 
 const anunciantesAleatorios = ref([]);

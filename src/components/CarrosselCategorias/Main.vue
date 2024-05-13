@@ -5,8 +5,7 @@
       class="w-56 p-4 rounded-md bg-gray-200 animate-pulse mb-5"
     ></div>
     <h3 v-else class="font-bold text-2xl mb-5 text-quanta-shop">
-      <span v-if="auth.getUser.token">Categorias destaques</span>
-      <span v-else>Categorias </span>
+      <span>Categorias destaques</span>
     </h3>
 
     <!-- Skeleton loading -->
@@ -73,9 +72,6 @@ import { onMounted, ref } from "vue";
 import { api } from "@/services/api";
 import { ShoppingCart } from "lucide-vue-next";
 import { useRouter } from "vue-router";
-import { AuthStore } from "@/stores/Auth";
-
-const auth = AuthStore();
 const router = useRouter();
 
 const categorias = ref([]);
@@ -107,16 +103,15 @@ const breakpoints = {
 };
 
 const obterCategorias = async () => {
-  if (auth.getUser.token) {
-    // const { data } = await api.get("Categoria/obterCategoriasDestaque/");
-    // categorias.value = data;
-    // return;
-    console.log("teste");
-  }
-
-  const { data } = await api.post("Anunciante/obterCategorias/", { nome: "" });
-
+  const { data } = await api.get("Categoria/obterCategoriasDestaque/");
   categorias.value = data;
+  return; // if (auth.getUser.token) {
+  //   console.log("teste");
+  // }
+
+  // const { data } = await api.post("Anunciante/obterCategorias/", { nome: "" });
+
+  // categorias.value = data;
 };
 
 const acessarCategoria = (idCategoria, nome) => {

@@ -21,8 +21,8 @@
             </span>
           </div>
           <div
-            class="text-center text-quanta-shop border-t mt-3 overflow-auto transition-[height] ease-in duration-200"
-            :class="{ 'h-0': !pergunta.show, 'h-auto': pergunta.show }"
+            class="text-center text-gray-600 border-t mt-3 overflow-auto transition-[height] ease-in duration-200"
+            :class="{ 'h-0': !pergunta.show, 'h-auto p-10': pergunta.show }"
           >
             {{ pergunta.resposta }}
           </div>
