@@ -41,6 +41,11 @@ const routes = [
         name: "detalhesCredenciado",
         component: () => import("@/views/DetalhesCredenciado/Main.vue"),
       },
+      {
+        path: "detalhesAnunciante/:id",
+        name: "detalhesAnunciante",
+        component: () => import("@/views/DetalhesAnunciante/Main.vue"),
+      },
     ],
   },
 

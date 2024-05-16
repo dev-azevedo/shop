@@ -15,6 +15,7 @@
       <h3 class="order-2 xl:order-1">{{ capitalize(props.nomeCategoria) }}</h3>
       <Store class="order-1 xl:order-2" />
     </div>
+
     <div class="w-full h-1/2 flex items-center justify-center">
       <img
         v-if="props.anuncio.imagemUrl"
@@ -28,6 +29,7 @@
         </div>
       </div>
     </div>
+    
     <div
       class="rounded-b-xl w-full h-1/2 flex flex-col items-center xl:items-start justify-between"
     >
@@ -96,10 +98,19 @@ onMounted(() => {
 
 const detalhesCredenciado = async () => {
   // Validar idAnunciante ou idCredenciamento
-  router.push({
-    name: "detalhesCredenciado",
+
+  if (props.anuncio.idCredenciamento != null)
+    return router.push({
+      name: "detalhesCredenciado",
+      params: {
+        id: props.anuncio.idCredenciamento,
+      },
+    });
+
+  return router.push({
+    name: "detalhesAnunciante",
     params: {
-      id: props.anuncio.idCredenciamento,
+      id: props.anuncio.idAnunciante,
     },
   });
 };
